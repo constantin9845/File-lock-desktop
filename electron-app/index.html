@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electron File and Directory Picker</title>
+</head>
+<body>
+  <h1>Select Files or Directories</h1>
+  
+  <section>
+    <h2>File Selection (Only Files)</h2>
+    <button id="selectFilesBtn">Select Files</button>
+    <ul id="fileList"></ul>
+  </section>
+
+
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    const selectFilesBtn = document.getElementById('selectFilesBtn');
+    const selectDirBtn = document.getElementById('selectDirBtn');
+    const fileList = document.getElementById('fileList');
+    const dirList = document.getElementById('dirList');
+
+    // Handle file selection (only files allowed)
+    selectFilesBtn.addEventListener('click', async () => {
+      const filePaths = await ipcRenderer.invoke('select-files'); // Request file selection
+
+      fileList.innerHTML = ""; // Clear previous file list
+
+      if (filePaths && filePaths.length > 0) {
+        filePaths.forEach(path => {
+          const listItem = document.createElement('li');
+          listItem.textContent = path; // Display each selected file path
+          fileList.appendChild(listItem);
+        });
+      } else {
+        const noFiles = document.createElement('li');
+        noFiles.textContent = 'No files selected.';
+        fileList.appendChild(noFiles);
+      }
+    });
+
+  </script>
+</body>
+</html>
