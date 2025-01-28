@@ -67,10 +67,7 @@ app.on('ready', ()=>{
 // Handle file selection
 ipcMain.handle('select-files', async () => {
     var result;
-    if(platform == 'win32'){
-
-    }
-    else if(platform == 'darwin' || platform == 'linux'){
+    if(platform == 'darwin' || platform == 'linux' || platform == 'win32'){
       result = await dialog.showOpenDialog(mainWindow, {
       
         properties: ['openFile', 'multiSelections'], // Allow multiple file selection
@@ -80,7 +77,7 @@ ipcMain.handle('select-files', async () => {
       process.exit();
     }
     
-  
+
     if (result.canceled) {
       return null; // User canceled the dialog
     }
