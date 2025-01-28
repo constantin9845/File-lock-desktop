@@ -22,7 +22,14 @@ app.on('ready', ()=>{
             contextIsolation: false,
         },
     });
-    mainWindow.loadFile('index.html');
+
+    if(platform == 'win32'){
+      mainWindow.loadFile('index2.html');
+    }
+    else{
+      mainWindow.loadFile('index.html');
+    }
+    
 
     // compile c++ files
     if(platform == 'darwin' || platform == 'linux'){
@@ -59,9 +66,20 @@ app.on('ready', ()=>{
 
 // Handle file selection
 ipcMain.handle('select-files', async () => {
-    const result = await dialog.showOpenDialog(mainWindow, {
-      properties: ['openFile', 'multiSelections'], // Allow multiple file selection
-    });
+    var result;
+    if(platform == 'win32'){
+
+    }
+    else if(platform == 'darwin' || platform == 'linux'){
+      result = await dialog.showOpenDialog(mainWindow, {
+      
+        properties: ['openFile', 'multiSelections'], // Allow multiple file selection
+      });
+    }
+    else{
+      process.exit();
+    }
+    
   
     if (result.canceled) {
       return null; // User canceled the dialog
@@ -69,3 +87,17 @@ ipcMain.handle('select-files', async () => {
   
     return result.filePaths; // Return the selected file paths
 });
+
+ipcMain.handle('select-dirs', async ()=>{
+  var result;
+  result = await dialog.showOpenDialog(mainWindow, {
+      
+    properties: ['openDirectory', 'multiSelections'], // Allow multiple file selection
+  });
+
+  if (result.canceled) {
+    return null; // User canceled the dialog
+  }
+
+  return result.filePaths; // Return the selected file paths
+})
