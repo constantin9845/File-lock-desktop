@@ -1,6 +1,19 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 
+const os = require('os');
+const { exit } = require('process');
+const { exec } = require('child_process');
+
+
+const platform = os.platform();
+
 let mainWindow;
+
+const winEXEC = 'gcc .\\src\\main.cpp .\\src\\fileHandler.cpp .\\src\\AES.cpp';
+const unixEXEC = 'g++ src/main.cpp src/fileHandler.cpp src/AES.cpp -o enc'
+
+const winRUN = '.\\a.exe';
+const unixRUN = './enc';
 
 app.on('ready', ()=>{
     mainWindow = new BrowserWindow({
@@ -10,6 +23,37 @@ app.on('ready', ()=>{
         },
     });
     mainWindow.loadFile('index.html');
+
+    // compile c++ files
+    if(platform == 'darwin' || platform == 'linux'){
+      exec(unixEXEC, (error, stdout,stderr)=>{
+        if(error){
+          console.log(error.message);
+          return;
+        }
+
+        if(stderr){
+          console.log(stderr);
+          return
+        }
+      });
+    }
+    else if(platform == 'win32'){
+      exec(winEXEC, (error, stdout,stderr)=>{
+        if(error){
+          console.log(error.message);
+          return;
+        }
+
+        if(stderr){
+          console.log(stderr);
+          return
+        }
+      })
+    }
+    else{
+      process.exit();
+    }
 })
 
 
