@@ -9,7 +9,7 @@ const platform = os.platform();
 
 let mainWindow;
 
-const winEXEC = 'gcc .\\src\\main.cpp .\\src\\fileHandler.cpp .\\src\\AES.cpp';
+const winEXEC = 'g++ .\\src\\main.cpp .\\src\\fileHandler.cpp .\\src\\AES.cpp';
 const unixEXEC = 'g++ src/main.cpp src/fileHandler.cpp src/AES.cpp -o enc'
 
 const winRUN = '.\\a.exe';
