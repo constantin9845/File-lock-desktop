@@ -19,25 +19,11 @@
     <ul id="dirList"></ul>
   </section>
 
+  <section>
+    <button id="encBtn">Encrypt</button>
+  </section>
 
 
 </body>
-<script defer>
-  // Directory selection WINDOWS
-selectDirBtn.addEventListener('click', async ()=>{
-    const dirPaths = await ipcRenderer.invoke('select-dirs');
-
-    dirList.innerHTML = ""; // Clear previous file list
-    fileCollection = [];
-
-    if(dirPaths && dirPaths.length > 0){
-        dirPaths.forEach(path =>{
-            const listItem = document.createElement('li');
-            listItem.textContent = path; // Display each selected file path
-            dirList.appendChild(listItem);
-            fileCollection.push(path);
-        })
-    }
-})
-</script>
+<script src="scripts/ui_win.js" defer></script>
 </html>
