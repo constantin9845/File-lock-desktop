@@ -1,8 +1,8 @@
 
 ## File-lock UI
 
-- parse paths 
 - feed paths to executable
+- handle key
 - UI
 
 
