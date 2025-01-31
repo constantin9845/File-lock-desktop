@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const fs = require('fs');
 
 const os = require('os');
 const { exit } = require('process');
@@ -98,3 +99,28 @@ ipcMain.handle('select-dirs', async ()=>{
 
   return result.filePaths; // Return the selected file paths
 })
+
+// parse paths and submit to file lock
+ipcMain.on('path-collection', (event,data)=>{
+  for(const e of data){
+
+    console.log(checkFile(e));
+
+  }
+})
+
+function checkFile(path){
+  try {
+    const stats = fs.statSync(path);
+
+    if (stats.isDirectory()) {
+        return 0;
+    } else if (stats.isFile()) {
+        return 1;
+    } else {
+        return 2;
+    }
+} catch (error) {
+    console.error(`Error checking path: ${error.message}`);
+}
+}
