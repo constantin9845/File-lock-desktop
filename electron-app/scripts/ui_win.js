@@ -6,6 +6,9 @@ const fileList = document.getElementById('fileList');
 const selectDirBtn = document.getElementById('selectDirsBtn');
 const dirList = document.getElementById('dirList');
 
+var fileCollection = [];
+var dirCollection = [];
+
 
 // File Seletion 
 selectFilesBtn.addEventListener('click', async () => {
@@ -35,14 +38,14 @@ selectDirBtn.addEventListener('click', async ()=>{
     const dirPaths = await ipcRenderer.invoke('select-dirs');
 
     dirList.innerHTML = ""; // Clear previous file list
-    fileCollection = [];
+    dirCollection = [];
 
     if(dirPaths && dirPaths.length > 0){
         dirPaths.forEach(path =>{
             const listItem = document.createElement('li');
             listItem.textContent = path; // Display each selected file path
             dirList.appendChild(listItem);
-            fileCollection.push(path);
+            dirCollection.push(path);
         })
     }
 })
@@ -52,5 +55,5 @@ selectDirBtn.addEventListener('click', async ()=>{
 const encBtn = document.getElementById('encBtn');
 
 encBtn.addEventListener('click',async ()=>{
-    ipcRenderer.send('path-collection', fileCollection);
+    ipcRenderer.send('path-collection', [...fileCollection, ...dirCollection]);
 })
