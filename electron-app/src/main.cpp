@@ -8,7 +8,7 @@ void menu(std::string& file, bool& directionFlag, bool& mode, int& keySize, std:
 
 	// PATH
 	std::cout<<"\nEnter <absolute> file/directory path: ";
-	std::cin>>file;
+	std::getline(std::cin, file);
 
 	// ENC / DEC
 	std::string direction;

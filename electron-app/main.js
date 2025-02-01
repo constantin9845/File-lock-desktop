@@ -86,6 +86,7 @@ ipcMain.handle('select-files', async () => {
     return result.filePaths; // Return the selected file paths
 });
 
+// Handle directory selection WIN
 ipcMain.handle('select-dirs', async ()=>{
   var result;
   result = await dialog.showOpenDialog(mainWindow, {
@@ -102,11 +103,27 @@ ipcMain.handle('select-dirs', async ()=>{
 
 // parse paths and submit to file lock
 ipcMain.on('path-collection', (event,data)=>{
-  for(const e of data){
 
-    console.log(checkFile(e));
+  index = 0;
 
+  // Clean data
+  for(var e of data[0]){
+    
+    if(checkFile(e) == 0){
+      
+      //WIN
+      if(platform == 'win32'){
+        e = e + '\\';
+      }
+      else{
+        e = e + '/*';
+      }
+    }
+
+    console.log(e)
   }
+
+
 })
 
 function checkFile(path){
