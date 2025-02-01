@@ -55,5 +55,13 @@ selectDirBtn.addEventListener('click', async ()=>{
 const encBtn = document.getElementById('encBtn');
 
 encBtn.addEventListener('click',async ()=>{
-    ipcRenderer.send('path-collection', [...fileCollection, ...dirCollection]);
+
+    // Parameter selection
+    var paramCollection = [];
+
+    paramCollection.push(document.getElementById('direction').value);
+    paramCollection.push(document.getElementById('mode').value);
+    paramCollection.push(document.getElementById('keySize').value);
+
+    ipcRenderer.send('path-collection', [[...fileCollection, ...dirCollection], paramCollection]);
 })
