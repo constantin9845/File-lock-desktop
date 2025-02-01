@@ -6,7 +6,8 @@ const fileList = document.getElementById('fileList');
 const selectDirBtn = document.getElementById('selectDirsBtn');
 const dirList = document.getElementById('dirList');
 
-var fileCollection = [];
+let fileCollection = [];
+let paramCollection = [];
 
 // File Seletion 
 selectFilesBtn.addEventListener('click', async () => {
@@ -35,9 +36,12 @@ selectFilesBtn.addEventListener('click', async () => {
 // Key file selection
 const keyFileBtn = document.getElementById('selectKeyBtn');
 const keyList = document.getElementById('keyList');
-let keyPath;
+let keyPath = "n";
 
 keyFileBtn.addEventListener('click', async ()=>{
+
+    keyList.innerHTML = "";
+    keyPath = "n";
 
     const filePath = await ipcRenderer.invoke('select-key');
 
@@ -62,11 +66,12 @@ const encBtn = document.getElementById('encBtn');
 encBtn.addEventListener('click',async ()=>{
 
     // Parameter selection
-    var paramCollection = [];
 
     paramCollection.push(document.getElementById('direction').value);
     paramCollection.push(document.getElementById('mode').value);
     paramCollection.push(document.getElementById('keySize').value);
+    paramCollection.push(document.getElementById('replaceFlag').value);
+
 
     ipcRenderer.send('path-collection', [fileCollection, paramCollection, keyPath]);
 })

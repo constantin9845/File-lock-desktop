@@ -1,8 +1,10 @@
 
 ## File-lock UI
 
-- feed paths to executable
-- handle key
+- feed paths to executable:
+- adjust parameter format main.cpp 
+- adjust logic new file/own file
+- add input checks 
 - UI
 
 

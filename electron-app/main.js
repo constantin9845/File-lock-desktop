@@ -120,14 +120,14 @@ ipcMain.on('path-collection', (event,data)=>{
 
   // parameters
   let KEY_FILE = data[2];
+
   let DIRECTION = data[1][0];
   let MODE = data[1][1];
   let KEY_SIZE = data[1][2];
-
-  console.log(KEY_FILE);
-  console.log(DIRECTION);
-  console.log(MODE);
-  console.log(KEY_SIZE);
+  let R_FLAG = false;
+  if(data[1][3] == 'on'){
+    R_FLAG = true;
+  }
 
   // Clean data
   for(var e of data[0]){
@@ -142,9 +142,23 @@ ipcMain.on('path-collection', (event,data)=>{
         e = e + '/*';
       }
     }
+
+    // White spaces in file paths cause problems on WIN
+    // replace with _
+    let arr = [...e];
+    for(let i = 0; i < arr.length; i++){
+      if(arr[i] == ' '){
+        arr[i] = '_';
+      }
+    }
+
+    e = arr.join("");
+
   }
 
 
+  let parameters = [DIRECTION, MODE, KEY_SIZE, KEY_FILE, R_FLAG];
+  console.log(parameters);
 })
 
 function checkFile(path){
@@ -158,7 +172,34 @@ function checkFile(path){
     } else {
         return 2;
     }
-} catch (error) {
-    console.error(`Error checking path: ${error.message}`);
+  } catch (error) {
+      console.error(`Error checking path: ${error.message}`);
+  }
 }
+
+
+// Encrypt Files
+function encrypt(path, parameters){
+  
+  if(platform == 'linux' || platform == 'darwin'){
+
+    if(parameters[4]){
+      exec(`./enc ${path} 
+        ${parameters[0]} 
+        ${parameters[1]} 
+        ${parameters[2]} 
+        ${parameters[3]}
+        -r
+        `);
+    }
+    else{
+      exec(`./enc ${path} 
+        ${parameters[0]} 
+        ${parameters[1]} 
+        ${parameters[2]} 
+        ${parameters[3]}
+        `);
+    }
+    
+  }
 }
