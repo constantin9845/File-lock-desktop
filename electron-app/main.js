@@ -101,6 +101,20 @@ ipcMain.handle('select-dirs', async ()=>{
   return result.filePaths; // Return the selected file paths
 })
 
+// Handle key file selection
+ipcMain.handle('select-key', async ()=>{
+  let result = await dialog.showOpenDialog(mainWindow, {
+
+    properties: ['openFile'],
+  })
+
+  if(result.canceled){
+    return null;
+  }
+
+  return result.filePaths;
+})
+
 // parse paths and submit to file lock
 ipcMain.on('path-collection', (event,data)=>{
 

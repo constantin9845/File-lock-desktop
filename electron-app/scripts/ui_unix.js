@@ -32,6 +32,24 @@ selectFilesBtn.addEventListener('click', async () => {
 
 
 
+// Key file selection
+const keyFileBtn = document.getElementById('selectKeyBtn');
+let keyPath;
+
+keyFileBtn.addEventListener('click', async ()=>{
+
+    const filePath = await ipcRenderer.invoke('select-key');
+
+    if(filePath && filePath.length == 1){
+        keyPath = filePath[0];
+    }
+    else{
+        alert('Error selecting key');
+    }
+});
+
+
+
 
 // send file paths
 const encBtn = document.getElementById('encBtn');

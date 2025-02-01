@@ -33,7 +33,27 @@ selectFilesBtn.addEventListener('click', async () => {
 });
 
 
-// Directory selection WINDOWS
+// Key file selection
+const keyFileBtn = document.querySelector('selectKeyBtn');
+let keyPath;
+
+keyFileBtn.addEventListener('click', async ()=>{
+
+    const filePath = await ipcRenderer.invoke('select-key');
+
+    if(filePath && filePath.length == 1){
+        keyPath = filePath[0];
+    }
+    else{
+        alert('Error selecting key');
+    }
+
+    alert(keyPath);
+});
+
+
+
+// Directory selection
 selectDirBtn.addEventListener('click', async ()=>{
     const dirPaths = await ipcRenderer.invoke('select-dirs');
 
