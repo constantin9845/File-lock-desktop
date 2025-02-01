@@ -118,7 +118,16 @@ ipcMain.handle('select-key', async ()=>{
 // parse paths and submit to file lock
 ipcMain.on('path-collection', (event,data)=>{
 
-  index = 0;
+  // parameters
+  let KEY_FILE = data[2];
+  let DIRECTION = data[1][0];
+  let MODE = data[1][1];
+  let KEY_SIZE = data[1][2];
+
+  console.log(KEY_FILE);
+  console.log(DIRECTION);
+  console.log(MODE);
+  console.log(KEY_SIZE);
 
   // Clean data
   for(var e of data[0]){
@@ -133,8 +142,6 @@ ipcMain.on('path-collection', (event,data)=>{
         e = e + '/*';
       }
     }
-
-    console.log(e)
   }
 
 

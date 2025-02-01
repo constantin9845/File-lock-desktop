@@ -34,7 +34,8 @@ selectFilesBtn.addEventListener('click', async () => {
 
 
 // Key file selection
-const keyFileBtn = document.querySelector('selectKeyBtn');
+const keyFileBtn = document.getElementById('selectKeyBtn');
+const keyList = document.getElementById('keyList');
 let keyPath;
 
 keyFileBtn.addEventListener('click', async ()=>{
@@ -43,12 +44,14 @@ keyFileBtn.addEventListener('click', async ()=>{
 
     if(filePath && filePath.length == 1){
         keyPath = filePath[0];
+
+        const listItem = document.createElement('li');
+        listItem.textContent = keyPath; 
+        keyList.appendChild(listItem);
     }
     else{
         alert('Error selecting key');
     }
-
-    alert(keyPath);
 });
 
 
@@ -83,5 +86,5 @@ encBtn.addEventListener('click',async ()=>{
     paramCollection.push(document.getElementById('mode').value);
     paramCollection.push(document.getElementById('keySize').value);
 
-    ipcRenderer.send('path-collection', [[...fileCollection, ...dirCollection], paramCollection]);
+    ipcRenderer.send('path-collection', [[...fileCollection, ...dirCollection], paramCollection, keyPath]);
 })

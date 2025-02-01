@@ -18,7 +18,7 @@ selectFilesBtn.addEventListener('click', async () => {
     if (filePaths && filePaths.length > 0) {
         filePaths.forEach(path => {
             const listItem = document.createElement('li');
-            listItem.textContent = path; // Display each selected file path
+            listItem.textContent = path; 
             fileList.appendChild(listItem);
             fileCollection.push(path);
         });
@@ -34,6 +34,7 @@ selectFilesBtn.addEventListener('click', async () => {
 
 // Key file selection
 const keyFileBtn = document.getElementById('selectKeyBtn');
+const keyList = document.getElementById('keyList');
 let keyPath;
 
 keyFileBtn.addEventListener('click', async ()=>{
@@ -42,6 +43,10 @@ keyFileBtn.addEventListener('click', async ()=>{
 
     if(filePath && filePath.length == 1){
         keyPath = filePath[0];
+
+        const listItem = document.createElement('li');
+        listItem.textContent = keyPath; 
+        keyList.appendChild(listItem);
     }
     else{
         alert('Error selecting key');
@@ -63,7 +68,7 @@ encBtn.addEventListener('click',async ()=>{
     paramCollection.push(document.getElementById('mode').value);
     paramCollection.push(document.getElementById('keySize').value);
 
-    ipcRenderer.send('path-collection', [fileCollection, paramCollection]);
+    ipcRenderer.send('path-collection', [fileCollection, paramCollection, keyPath]);
 })
 
 
