@@ -258,9 +258,9 @@ function encrypt(path, parameters){
       // ARGS = 7
       if(parameters[4]){
 
-        console.log(`.\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]} -r`)
+        console.log(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]} -r`)
 
-        exec(`.\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]} -r`, (error, stderr, stdout)=>{
+        exec(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]} -r`, (error, stderr, stdout)=>{
           console.log(stderr);
         });
       }
@@ -268,9 +268,9 @@ function encrypt(path, parameters){
       // ARGS = 6
       else{
 
-        console.log(`.\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]}`)
+        console.log(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]}`)
 
-        exec(`.\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]}`, (error, stderr, stdout)=>{
+        exec(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]}`, (error, stderr, stdout)=>{
           console.log(stderr);
         });
       }
@@ -282,9 +282,9 @@ function encrypt(path, parameters){
       // ARGS = 7
       if(parameters[4]){
 
-        console.log(`.\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n -r`)
+        console.log(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n -r`)
 
-        exec(`.\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n -r`, (error, stderr, stdout)=>{
+        exec(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n -r`, (error, stderr, stdout)=>{
           console.log(stderr);
         });
       }
@@ -292,9 +292,9 @@ function encrypt(path, parameters){
       // ARGS = 6
       else{
 
-        console.log(`.\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n`)
+        console.log(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n`)
 
-        exec(`.\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n`, (error, stderr, stdout)=>{
+        exec(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n`, (error, stderr, stdout)=>{
           console.log(stderr);
         });
       }
