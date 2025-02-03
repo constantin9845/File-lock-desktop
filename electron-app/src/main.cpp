@@ -122,20 +122,50 @@ void menu(std::string& file, bool& directionFlag, bool& mode, int& keySize, std:
 
 int main(int argc, char const *argv[]){
 
-	std::string path = "";
-	bool directionFlag;
-	bool mode; // Mode: ECB = 0 / CBC = 1
-	int keySize;
-	std::string keyPath = "";
-	bool replaceFlag = false;
+	/*
+		LOGIC
+		argc == 7 : R flag => on / User key => yes and no
+
+		argc == 6 : R flag => off / User key => yes and no
+	*/
+
+	if(argc > 7 || argc < 6){
+		std::cout<<"Wrong parameters: "<<argc<<std::endl;
+
+		for(int i = 0; i < argc; i++){
+			std::string temp = argv[i];
+			std::cout<<temp<<std::endl;
+		}
+
+		exit(3);
+	}
+
+	// replace flag
+	bool replaceFlag = (argc == 7);
+
+
+	// target path
+	std::string path = argv[1];
+
+	// check for directory or file
+	std::string temp = argv[2];
+	bool directionFlag = (temp == "Encryption"); // Encryption = 1 / Decryption = 0
+
+	// Mode
+	temp = argv[3];
+	bool mode = (temp == "CBC"); // Mode: ECB = 0 / CBC = 1
+
+	// Key size
+	temp = argv[4];
+	int keySize = (temp == "128") ? 128 : (temp == "192") ? 192 : 256;
+
+	// key path
+	std::string keyPath = argv[5];
 
 	bool dirFlag;
-
-	menu(path, directionFlag, mode, keySize, keyPath, replaceFlag);
-
 	bool ownKey; 
 
-	if(keyPath == ""){
+	if(keyPath == "n"){
 		ownKey = false;
 	}
 	else{

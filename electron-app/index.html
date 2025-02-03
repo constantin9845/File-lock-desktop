@@ -8,9 +8,15 @@
 <body>
   
   <section>
-    <h2>File Selection</h2>
-    <button id="selectFilesBtn">Select Files</button>
+    <h2>Select Files</h2>
+    <button id="selectFilesBtn">Select</button>
     <ul id="fileList"></ul>
+  </section>
+
+  <section>
+    <h2>Select Directory</h2>
+    <button id="selectDirsBtn">Select</button>
+    <ul id="dirList"></ul>
   </section>
 
   <section>
@@ -34,7 +40,7 @@
     </select>
 
     <label for="newKey">New Key</label>
-    <input type="radio" id="newKeyBtn">
+    <input type="checkbox" id="newKeyBtn" value="New Key">
 
     <section>
       <h2>Select Key file</h2>
@@ -42,8 +48,8 @@
       <ul id="keyList"></ul>
     </section>
 
-    <label for="rplaceFlag">Replace Files</label>
-    <input type="radio" id="replaceFlag">
+    <label for="replaceFlag">Replace Files</label>
+    <input type="checkbox" id="replaceFlag" value="Replace Files">
   </section>
 
   <section>

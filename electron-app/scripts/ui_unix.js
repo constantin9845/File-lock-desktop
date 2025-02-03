@@ -7,7 +7,7 @@ const selectDirBtn = document.getElementById('selectDirsBtn');
 const dirList = document.getElementById('dirList');
 
 let fileCollection = [];
-let paramCollection = [];
+var dirCollection = [];
 
 // File Seletion 
 selectFilesBtn.addEventListener('click', async () => {
@@ -57,6 +57,23 @@ keyFileBtn.addEventListener('click', async ()=>{
     }
 });
 
+// Directory selection
+selectDirBtn.addEventListener('click', async ()=>{
+    const dirPaths = await ipcRenderer.invoke('select-dirs');
+
+    dirList.innerHTML = ""; // Clear previous file list
+    dirCollection = [];
+
+    if(dirPaths && dirPaths.length > 0){
+        dirPaths.forEach(path =>{
+            const listItem = document.createElement('li');
+            listItem.textContent = path; // Display each selected file path
+            dirList.appendChild(listItem);
+            dirCollection.push(path);
+        })
+    }
+})
+
 
 
 
@@ -66,14 +83,40 @@ const encBtn = document.getElementById('encBtn');
 encBtn.addEventListener('click',async ()=>{
 
     // Parameter selection
+    let paramCollection = [];
+
+    // Check if files selected
+    if(fileCollection.length == 0 && dirCollection.length == 0){
+        alert('Select a file.');
+        return;
+    }
+
+    // Check if new key selected
+    if(document.getElementById('newKeyBtn').checked){
+        keyPath = 'n';
+    }
+
+    // Check if any key choice was made
+    if(!document.getElementById('newKeyBtn').checked && keyPath == 'n'){
+        alert('Add key file or select new key checkbox.');
+        return;
+    }
+
+    // Check if key entered for decryption
+    if(document.getElementById('direction').value == 'Decryption' && keyPath == 'n'){
+        alert("Need Key for decryption.");
+        return;
+    }
 
     paramCollection.push(document.getElementById('direction').value);
     paramCollection.push(document.getElementById('mode').value);
     paramCollection.push(document.getElementById('keySize').value);
-    paramCollection.push(document.getElementById('replaceFlag').value);
+    paramCollection.push(document.getElementById('replaceFlag').checked);
 
+    ipcRenderer.send('path-collection', [[...fileCollection, ...dirCollection], paramCollection, keyPath]);
 
-    ipcRenderer.send('path-collection', [fileCollection, paramCollection, keyPath]);
+    keyList.innerHTML = "";
+    keyPath = 'n';
 })
 
 
