@@ -3,58 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/style.css">
+
   <title>File lock</title>
 </head>
 <body>
+  <div class="container">
+    <div class="title">
+      <p>File-Lock</p>
+    </div>
+    <div class="content">
+      <div class="input">
+        <section class="upload_section">
+          <h2>Select Files</h2>
+          <button id="selectFilesBtn">&#9111;</button>
+        </section>
+      
+        <section class="upload_section">
+          <h2>Select Directory</h2>
+          <button id="selectDirsBtn">&#9111;</button>
+        </section>
   
-  <section>
-    <h2>Select Files</h2>
-    <button id="selectFilesBtn">Select</button>
-    <ul id="fileList"></ul>
-  </section>
+        <section class="upload_section">
+          <h2>Select Key file</h2>
+          <button id="selectKeyBtn">&#9111;</button>
+        </section>
+      
+        <section class="params">
+  
+          <div class="param_section">
+            <h4>Function</h4>
+            <select id="direction">
+              <option value="Encryption">Encryption</option>
+              <option value="Decryption">Decryption</option>
+            </select>
+          </div>
+          
+          <div class="param_section">
+            <h4>Mode</h4>
+            <select name="mode" id="mode">
+              <option value="ECB">ECB</option>
+              <option value="CBC">CBC</option>
+            </select>
+          </div>
+          
+          <div class="param_section">
+            <h4>Key Size</h4>
+            <select name="keySize" id="keySize">
+              <option value="128">128</option>
+              <option value="192">192</option>
+              <option value="256">256</option>
+            </select>
+          </div>
+          
+          <div class="param_checkboxes">
+            <label for="newKey">New Key</label>
+            <input type="checkbox" id="newKeyBtn" value="New Key">
+          </div>
+      
+          <div class="param_checkboxes">
+            <label for="replaceFlag">Replace Files</label>
+            <input type="checkbox" id="replaceFlag" value="Replace Files">
+          </div>
+        </section>
+  
+        <div class="submit">
+          <button id="encBtn">Submit</button>
+        </div>
+      </div>
+      <div class="preview">
+        <div class="preview_files">
+          <p>Files</p>
+          <ul id="fileList"></ul>
+        </div>
 
-  <section>
-    <h2>Select Directory</h2>
-    <button id="selectDirsBtn">Select</button>
-    <ul id="dirList"></ul>
-  </section>
+        <div class="preview_files">
+          <p>Directory</p>
+          <ul id="dirList"></ul>
+        </div>
 
-  <section>
-    <h4>Encryption/Decryption</h4>
-    <select id="direction">
-      <option value="Encryption">Encryption</option>
-      <option value="Decryption">Decryption</option>
-    </select>
-
-    <h4>Select Mode</h4>
-    <select name="mode" id="mode">
-      <option value="ECB">ECB</option>
-      <option value="CBC">CBC</option>
-    </select>
-
-    <h4>Key Size</h4>
-    <select name="keySize" id="keySize">
-      <option value="128">128</option>
-      <option value="192">192</option>
-      <option value="256">256</option>
-    </select>
-
-    <label for="newKey">New Key</label>
-    <input type="checkbox" id="newKeyBtn" value="New Key">
-
-    <section>
-      <h2>Select Key file</h2>
-      <button id="selectKeyBtn">Select File</button>
-      <ul id="keyList"></ul>
-    </section>
-
-    <label for="replaceFlag">Replace Files</label>
-    <input type="checkbox" id="replaceFlag" value="Replace Files">
-  </section>
-
-  <section>
-    <button id="encBtn">Submit</button>
-  </section>
+        <div class="preview_files">
+          <p>Key File</p>
+          <ul id="keyList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 <script src="scripts/ui_unix.js" defer></script>

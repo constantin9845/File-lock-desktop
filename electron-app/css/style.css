@@ -1,0 +1,251 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+}
+
+.title{
+    width: 100%;
+    height: 10%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    -webkit-box-shadow: 0px 4px 12px 0px rgba(179,186,130,1);
+    -moz-box-shadow: 0px 4px 12px 0px rgba(179,186,130,1);
+    box-shadow: 0px 4px 12px 0px rgba(179,186,130,1);
+}
+
+.title p{
+    color: black;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+.content{
+    width: 100%;
+    height: 90%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.input{
+    width: 35%;
+}
+
+.preview{
+    width: 65%;
+}
+
+.upload_section{
+    width: 100%;
+    height: 12%;
+    background-color: yellow;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.upload_section h2{
+    width: 60%;
+    height: 100%;
+    padding-left: 2%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+}
+
+.upload_section button{
+    width: 40%;
+    height: 100%;
+
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+
+    border: none;
+
+    font-size: 1.4em;
+}
+
+.upload_section button:hover{
+    background-color: rgb(225, 241, 255);
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+.params{
+    width: 100%;
+    height: 55%;
+    background-color: rgb(253, 249, 193);
+}
+
+.param_section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 20%;
+}
+
+.param_section h4{
+    width: 60%;
+    height: 100%;
+    padding-left: 2%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.param_section select{
+    width: 40%;
+}
+
+.param_section select:hover{
+    cursor: pointer;
+    transition-duration: 0.3s;
+    background-color: bisque;
+}
+
+.param_section select:focus{
+    outline: none;
+}
+
+.param_checkboxes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 20%;
+}
+
+.param_checkboxes label{
+    width: 60%;
+    height: 100%;
+    padding-left: 2%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.param_checkboxes input{
+    width: 40%;
+    height: 80%;
+}
+
+.param_checkboxes input:hover{
+    cursor: pointer;
+    background-color: bisque;
+    transition-duration: 0.3s;
+}
+
+.submit{
+    width: 100%;
+    height: 9%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(231, 241, 86, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(214, 196, 32, 0.37);
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+}
+
+.submit button{
+    width: 100%;
+    height: 100%;
+    font-size: 1.4em;
+    border: none;
+    background-color: yellow;
+}
+
+.submit button:hover{
+    cursor: pointer;
+    transition-duration: 0.3s;
+    background-color: aliceblue;
+}
+
+/*
+PREVIEW SECTION
+*/
+.preview{
+    width: 65%;
+    height: 100%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.preview_files{
+    width: 90%;
+
+    background: rgba( 255, 228, 0, 0.5 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 5.5px );
+    -webkit-backdrop-filter: blur( 5.5px );
+    border-radius: 10px;
+}
+
+.preview_files:nth-child(1){
+    height: 50%;
+    overflow-y: scroll;
+}
+
+.preview_files:nth-child(2){
+    height: 18%;
+    overflow: hidden;
+}
+
+.preview_files:nth-child(3){
+    height: 18%;
+    overflow: hidden;
+}
+
+.preview_files p{
+    padding: 2%;
+    font-size: 1.2em;
+    border-bottom: 0.1px solid white;
+}
+
+.preview_files ul{
+    list-style-type: none;
+    padding: 2%;
+}
+
+.preview_files ul li{
+    margin-bottom: 1%;
+}
+
+::-webkit-scrollbar {
+    width: 10px;  
+}
+
+::-webkit-scrollbar-track {
+    background: rgba( 255, 228, 0, 0.5 ); 
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(160, 144, 1); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
