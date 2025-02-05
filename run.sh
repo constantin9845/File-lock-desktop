@@ -1,1 +1,0 @@
-g++ src/main.cpp src/fileHandler.cpp src/AES.cpp -o enc
