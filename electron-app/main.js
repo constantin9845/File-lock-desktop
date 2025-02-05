@@ -19,6 +19,9 @@ const unixRUN = './enc';
 
 app.on('ready', ()=>{
     mainWindow = new BrowserWindow({
+
+        height: 700,
+        width: 1200,
         webPreferences:{
             nodeIntegration: true,
             contextIsolation: false,
