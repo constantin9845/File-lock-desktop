@@ -1,10 +1,14 @@
 
 ## File-lock UI
 
-- Test all possible settings
-- UI
+- Submission format: summary pop-up -> confirm/deny
+- Dsiplay function callback, clear form if successful
 
+- Test all possible settings
 - Loading bar encryption
+
+
+- responsive UI
 
 
 ## FIX:
