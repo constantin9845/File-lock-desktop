@@ -18,7 +18,8 @@ const winRUN = '.\\a.exe';
 const unixRUN = './enc';
 
 app.on('ready', ()=>{
-    mainWindow = new BrowserWindow({
+    if(platform == 'win32'){
+      mainWindow = new BrowserWindow({
 
         height: 700,
         width: 1200,
@@ -26,7 +27,20 @@ app.on('ready', ()=>{
             nodeIntegration: true,
             contextIsolation: false,
         },
-    });
+      });
+    }
+    else{
+      mainWindow = new BrowserWindow({
+
+        height: 800,
+        width: 1200,
+        webPreferences:{
+            nodeIntegration: true,
+            contextIsolation: false,
+        },
+      });
+    }
+    
 
     mainWindow.loadFile('index.html');
     
