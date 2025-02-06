@@ -186,7 +186,7 @@ int main(int argc, char const *argv[]){
 	if(star == "*"){ dirFlag = true; }else{ dirFlag = false; }
 #endif
 
-	std::string message = "\n\n";
+	std::string message = "";
 
 	// SINGLE FILE ENCRYPTION
 	if(directionFlag && !dirFlag){
@@ -194,12 +194,11 @@ int main(int argc, char const *argv[]){
 		if(ownKey){
 			fileHandler::encryptFile(path, keyPath, replaceFlag, mode, keySize);
 			if(replaceFlag){
-				message += "\n"+fileHandler::getFileName(path)+" has been encrypted.\n";
+				message += fileHandler::getFileName(path)+" has been encrypted.\n";
 				std::cout<<message;
 			}
 			else{
-				message += "\n"+fileHandler::getFileName(path)+" has been encrypted.\n";
-				message += "Find encrypted file in Downloads/target/\n";
+				message += fileHandler::getFileName(path)+" has been encrypted.\n";
 				std::cout<<message;
 			}
 		}
@@ -207,13 +206,11 @@ int main(int argc, char const *argv[]){
 		else{
 			fileHandler::encryptFile(path, replaceFlag, mode, keySize);
 			if(replaceFlag){
-				message += "\n"+fileHandler::getFileName(path)+" has been encrypted.\n";
-				message += "Find encryption key (_key) in Downloads/target/\n";
+				message += fileHandler::getFileName(path)+" has been encrypted.\n";
 				std::cout<<message;
 			}
 			else{
-				message += "\n"+fileHandler::getFileName(path)+" has been encrypted.\n";
-				message += "Find encrypted file + encryption key (_key) in Downloads/target/\n";
+				message += fileHandler::getFileName(path)+" has been encrypted.\n";
 				std::cout<<message;
 			}
 		}
@@ -224,7 +221,7 @@ int main(int argc, char const *argv[]){
 	// SINGLE FILE DECRYPTION
 	else if(!directionFlag && !dirFlag){
 		fileHandler::decryptFile(path, keyPath, mode, keySize);
-		message += "\n"+fileHandler::getFileName(path)+" has been decrypted.\n";
+		message += fileHandler::getFileName(path)+" has been decrypted.\n";
 		std::cout<<message;
 		return 0;
 	}
@@ -278,12 +275,10 @@ int main(int argc, char const *argv[]){
 		if(!ownKey){
 			if(replaceFlag){
 				message += "\nEncryption Finished.";
-				message += "\nFind encryption key (_key) in Downloads/target/\n";
 				std::cout<<message;
 			}
 			else{
 				message += "\nEncryption Finished.";
-				message += "\nFind files and encryption key (_key) in Downloads/target/\n";
 				std::cout<<message;
 			}
 			fileHandler::storeKey(key, keySize); // store the new key
@@ -295,7 +290,6 @@ int main(int argc, char const *argv[]){
 			}
 			else{
 				message += "\nEncryption Finished.";
-				message += "\nFind files in Downloads/target/\n";
 				std::cout<<message;
 			}
 			

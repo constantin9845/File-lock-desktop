@@ -115,7 +115,7 @@ ipcMain.handle('select-key', async ()=>{
 })
 
 // parse paths and submit to file lock
-ipcMain.on('path-collection', (event,data)=>{
+ipcMain.on('path-collection', async(event,data)=>{
 
   // parameters
   // parameters
@@ -133,50 +133,26 @@ ipcMain.on('path-collection', (event,data)=>{
   KEY_SIZE = data[1][2];
   R_FLAG = (data[1][3]);
 
-  // Clean data
-  index = 0;
-  for(var e of data[0]){
-    
-    if(checkFile(e) == 0){
-      
-      //WIN
-      if(platform == 'win32'){
-        e = e + '\\';
-      }
-      else{
-        e = e + '/\\*';
-      }
-    }
 
-    // White spaces in file paths cause problems on WIN
-    // replace with _
-
-    let arr = [...e];
-    for(let i = 0; i < arr.length; i++){
-      if(arr[i] == ' '){
-        arr[i] = '_';
-      }
-    }
-
-    data[0][index++] = arr.join("");
-
-  }
-
-  // Clean key file path
-  let arr = [...KEY_FILE];
-  for(let i = 0; i < arr.length; i++){
-    if(arr[i] == ' '){
-      arr[i] = '_';
-    }
-  }
-  KEY_FILE = arr.join("");
 
 
   let parameters = [DIRECTION, MODE, KEY_SIZE, KEY_FILE, R_FLAG];
 
-  for(var path of data[0]){
-    encrypt(path, parameters);
-  }
+  var logs = [];
+
+  await Promise.all(
+    data[0].map(async (path) => {
+      try {
+        const stdout = await encrypt(path, parameters);
+        logs.push(stdout);
+      } catch (err) {
+        logs.push(err);
+      }
+    })
+  );
+
+
+  event.reply('encryption-logs', logs);
 
 })
 
@@ -200,110 +176,32 @@ function checkFile(path){
 // Encrypt Files
 function encrypt(path, parameters){
 
-  console.log("Command: ");
-  
-  if(platform == 'linux' || platform == 'darwin'){
+  return new Promise((resolve, reject)=>{
+    let command;
 
-    // With User Key
-    if(parameters[3] != 'n'){
-
-      // Replace flag
-      // ARGS = 7
+    if(platform == 'linux' || platform == 'darwin'){
+      command = `./enc "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
+    
       if(parameters[4]){
-
-        console.log(`./enc ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]} -r`)
-
-        exec(`./enc ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]} -r`, (error, stderr, stdout)=>{
-          console.log(stderr);
-        });
-      }
-      // Without R flag
-      // ARGS = 6
-      else{
-
-        console.log(`./enc ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]}`)
-
-        exec(`./enc ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]}`, (error, stderr, stdout)=>{
-          console.log(stderr);
-        });
+        command += ` -r`
       }
     }
-    // No user Key
+    else if(platform == 'win32'){
+      command = `.\\a.exe "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
+    
+      if(parameters[4]){
+        command += ` -r`
+      }
+    }
     else{
-
-      // Replace flag
-      // ARGS = 7
-      if(parameters[4]){
-
-        console.log(`./enc ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n -r`)
-
-        exec(`./enc ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n -r`, (error, stderr, stdout)=>{
-          console.log(stderr);
-        });
-      }
-      // Without R flag
-      // ARGS = 6
-      else{
-
-        console.log(`./enc ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n`)
-
-        exec(`./enc ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n`, (error, stderr, stdout)=>{
-          console.log(stderr);
-        });
-      }
+      return reject("Unsupported platform")
     }
-  }
-  else if(platform == 'win32'){
-    // With User Key
-    if(parameters[3] != 'n'){
 
-      // Replace flag
-      // ARGS = 7
-      if(parameters[4]){
+    exec(command, (error, stdout, stderr) =>{
 
-        console.log(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]} -r`)
+      if(error){ reject(error); }
+      else{ resolve(stdout) }
+    })
+  })
 
-        exec(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]} -r`, (error, stderr, stdout)=>{
-          console.log(stderr);
-        });
-      }
-      // Without R flag
-      // ARGS = 6
-      else{
-
-        console.log(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]}`)
-
-        exec(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} ${parameters[3]}`, (error, stderr, stdout)=>{
-          console.log(stderr);
-        });
-      }
-    }
-    // No user Key
-    else{
-
-      // Replace flag
-      // ARGS = 7
-      if(parameters[4]){
-
-        console.log(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n -r`)
-
-        exec(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n -r`, (error, stderr, stdout)=>{
-          console.log(stderr);
-        });
-      }
-      // Without R flag
-      // ARGS = 6
-      else{
-
-        console.log(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n`)
-
-        exec(`.\\a.exe ${path} ${parameters[0]} ${parameters[1]} ${parameters[2]} n`, (error, stderr, stdout)=>{
-          console.log(stderr);
-        });
-      }
-    }
-  }
-  else{
-    return;
-  }
 }

@@ -90,6 +90,57 @@
     </div>
   </div>
 
+  <div id="summary_container" class="summary_container">
+    <div class="title">
+      <p>Summary</p>
+    </div>
+    <div class="summary_box">
+
+      <div class="summary_files">
+        <ul id="summ_list"></ul>
+      </div>
+
+      <div class="function">
+        <p>Function: </p>
+        <p id="summ_function"></p>
+      </div>
+
+      <div class="function">
+        <p>Mode: </p>
+        <p id="summ_mode"></p>
+      </div>
+
+      <div class="function">
+        <p>Key Size: </p>
+        <p id="summ_keySize"></p>
+      </div>
+
+      <div class="function">
+        <p>Key File: </p>
+        <p id="summ_keyFilePath"></p>
+      </div>
+
+      <div class="function">
+        <p>Replace File(s): </p>
+        <p id="summ_replaceFiles"></p>
+      </div>
+    </div>
+    <div class="warning">
+      <p>Decrypting files with the wrong key permanently scrambles files.</p>
+      <p>If file(s) broken after decryption:</p>
+      <p>*** 1)Encrypt with same parameters and key</p>
+      <p>*** 2)This returns files to their previous state.</p>
+      <p>Retry with correct key/parameters again.</p>
+    </div>
+    <div class="summary_submit">
+      <p>Confirm</p>
+      <div class="summary_submit_btn">
+        <button id="confirm">Yes</button>
+        <button id="deny">No</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 <script src="scripts/ui_unix.js" defer></script>
 </html>
