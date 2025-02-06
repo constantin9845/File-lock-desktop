@@ -160,24 +160,42 @@ confirm.addEventListener('click', async()=>{
 
     ipcRenderer.send('path-collection', [[...fileCollection, ...dirCollection], paramCollection, keyPath]);
 
-    ipcRenderer.on('encryption-logs', (event, logs)=>{
-        
-        let message = ''
-        for(var i = 0; i < logs.length; i++){
-            message += logs[i];
-            message += '\n';
-        }
+    ipcRenderer.removeListener('encryption-logs', handleEncryptionLogs);
 
-        alert(message)
-    })
+    ipcRenderer.on('encryption-logs', handleEncryptionLogs)
 
-
-    //summaryContainer.style.transform = 'translate(-50%, 100%)';
-
+    // Empty data
     keyList.innerHTML = "";
     keyPath = 'n';
-})
+
+    func.innerText = '';
+    mode.innerText = '';
+    keyS.innerText = '';
+    replace.innerText = '';
+    dirList.innerHTML = '';
+    fileList.innerHTML = '';
+    keyList.innerHTML = '';
+    summ_list.innerHTML = '';
+    summaryContainer.style.transform = 'translate(-50%, 100%)';
+});
 
 deny.addEventListener('click', ()=>{
-
+    // Empty data
+    func.innerText = '';
+    mode.innerText = '';
+    keyS.innerText = '';
+    replace.innerText = '';
+    summ_list.innerHTML = '';
+    summaryContainer.style.transform = 'translate(-50%, 100%)';
 })
+
+
+// Logging response
+function handleEncryptionLogs(event, logs) {
+    let message = '';
+    for (let i = 0; i < logs.length; i++) {
+        message += logs[i];
+        message += '\n';
+    }
+    alert(message);
+}

@@ -213,6 +213,8 @@ function encrypt(path, parameters){
 
     exec(command, (error, stdout, stderr) =>{
 
+      console.log(stdout);
+
       if(error){ reject(error); }
       else{ resolve(stdout) }
     })
