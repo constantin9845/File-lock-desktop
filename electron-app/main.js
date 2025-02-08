@@ -75,7 +75,7 @@ app.on('ready', ()=>{
     else{
       process.exit();
     }
-})
+});
 
 
 // Handle file selection
@@ -147,12 +147,44 @@ ipcMain.on('path-collection', async(event,data)=>{
   KEY_SIZE = data[1][2];
   R_FLAG = (data[1][3]);
 
+  index = 0;
+  files = 0;
+  for(var e of data[0]){
+    if(checkFile(e) == 0){
+      if(platform == 'linux' || platform == 'darwin'){
+        data[0][index] = e + '/\*';
+      }
+      else if(platform == 'win32'){
+        data[0][index] =  e + '\\';
+      }
+    }
 
+    if(checkFile(e) == 1){
+      files++;
+    }
+
+    index++;
+  }
 
 
   let parameters = [DIRECTION, MODE, KEY_SIZE, KEY_FILE, R_FLAG];
 
   var logs = [];
+
+  var keyPath;
+
+  // build keypath if multiple files
+  if(platform == 'darwin' || platform == 'linux'){
+    keyPath = app.getPath('downloads');
+    keyPath += '/target/_key';
+  }
+  else if(platform == 'win32'){
+    keyPath = app.getPath('downloads');
+    keyPath += '\\target\\_key';
+  }
+
+  console.log(keyPath);
+  return;
 
   await Promise.all(
     data[0].map(async (path) => {

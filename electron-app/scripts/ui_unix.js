@@ -33,7 +33,6 @@ selectFilesBtn.addEventListener('click', async () => {
 });
 
 
-
 // Key file selection
 const keyFileBtn = document.getElementById('selectKeyBtn');
 const keyList = document.getElementById('keyList');
@@ -177,6 +176,10 @@ confirm.addEventListener('click', async()=>{
     keyList.innerHTML = '';
     summ_list.innerHTML = '';
     summaryContainer.style.transform = 'translate(-50%, 100%)';
+
+    fileCollection = [];
+    dirCollection = [];
+    paramCollection = [];
 });
 
 deny.addEventListener('click', ()=>{
