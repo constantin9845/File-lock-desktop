@@ -115,6 +115,15 @@ encBtn.addEventListener('click',async ()=>{
         return;
     }
 
+
+    // If encryption w/ no R FLAG 
+    //  if both files + directory -> reject
+    //  directory will overwrite files
+    if(!document.getElementById('replaceFlag').checked && (dirCollection.length == 1 && fileCollection.length > 1)){
+        alert("When not replacing original files: Encrypt files and directories separately.");
+        return;
+    }
+
     paramCollection.push(document.getElementById('direction').value);
     paramCollection.push(document.getElementById('mode').value);
     paramCollection.push(document.getElementById('keySize').value);

@@ -84,14 +84,20 @@ public:
 	// @param deleteOld flag to delete existing Downloads/target/ file(s)
 	static std::string getOutputPath(const std::string& fileName, bool deleteOld);
 
+	// Constructs output path for Downloads/
+	// Used for storing new key file 
+	// @param fileName name of key file
+	// @param deleteOld flag to delete existing Downloads/target/ file(s)
+	static std::string getOutputPath(const std::string& fileName, bool deleteOld, bool key);
+
 	// Creates target directory in Downloads 
-	static bool createRootDir();
+	static std::string createRootDir();
 
 	// Given absolute path and absolute path of relative root folder of the target encryption directory
 	// return the file's relative path to this root folder
 	// @param filePath absolute path of file
 	// @param path absolute path of relative root folder 
-	static std::string parsePath(const std::string& filePath, const std::string& path);
+	static std::string parsePath(const std::string& filePath, const std::string& path, const std::string& rootDir);
 
 	// constructs path for subdirectories in directory encryption
 	// needed for reconstructing file structure

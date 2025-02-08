@@ -240,8 +240,9 @@ int main(int argc, char const *argv[]){
 			key = fileHandler::readKey(keyPath, keySize);
 		}
 
-		// create new root dir / REPLACES EXISTING ONE (target dir in Downloads)
-		if(!fileHandler::createRootDir()){
+		// create new root dir / 
+		std::string rootDir = fileHandler::createRootDir();
+		if(rootDir == "Could not create root directory"){
 			std::cout<<"Could not create target Directory.";
 			exit(3);
 		}
@@ -259,7 +260,7 @@ int main(int argc, char const *argv[]){
 
 					if(!replaceFlag){
 						// construct path inside target directory
-						newPath = fileHandler::parsePath(entry.path().string(), path);
+						newPath = fileHandler::parsePath(entry.path().string(), path, rootDir);
 
 						// construct the path
 						fileHandler::constructPath(newPath);

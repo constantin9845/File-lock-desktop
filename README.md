@@ -1,11 +1,18 @@
 ## File-lock UI
 
-- white space in file paths: potential errors with directories on WIN -> test
-- fix: Insecure Content-Security-Policy
+
+### Fix
+
+- Root dir is created for each file when list of files passed.
+- new target dir created with R flag
+
+### Tasks
+
 - create executable
-
-- Test all possible settings
 - Loading bar encryption
-
+- build script
 
 - responsive UI
+
+
+

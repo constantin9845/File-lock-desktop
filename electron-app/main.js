@@ -167,35 +167,69 @@ ipcMain.on('path-collection', async(event,data)=>{
   }
 
 
-  let parameters = [DIRECTION, MODE, KEY_SIZE, KEY_FILE, R_FLAG];
+  var parameters = [DIRECTION, MODE, KEY_SIZE, KEY_FILE, R_FLAG];
 
   var logs = [];
-
   var keyPath;
+  let newKey = true;
 
-  // build keypath if multiple files
-  if(platform == 'darwin' || platform == 'linux'){
-    keyPath = app.getPath('downloads');
-    keyPath += '/target/_key';
-  }
-  else if(platform == 'win32'){
-    keyPath = app.getPath('downloads');
-    keyPath += '\\target\\_key';
-  }
+  // build keypath if multiple files and ENCRYPTING
+  // ensures key is re used
+  if(files > 1 && KEY_FILE == 'n' && DIRECTION == 'Encryption'){
+    if(platform == 'darwin' || platform == 'linux'){
+      keyPath = app.getPath('downloads');
+      keyPath += '/_key';
+    }
+    else if(platform == 'win32'){
+      keyPath = app.getPath('downloads');
+      keyPath += '\\_key';
+    }
 
-  console.log(keyPath);
-  return;
-
-  await Promise.all(
-    data[0].map(async (path) => {
+    // Encrypt first file
+    // adjust key path variable to re use key
+    if (newKey) {
       try {
-        const stdout = await encrypt(path, parameters);
+        let stdout = await encrypt(data[0][0], parameters);
+        parameters[3] = keyPath;
         logs.push(stdout);
+        newKey = false;
       } catch (err) {
         logs.push(err);
       }
-    })
-  );
+    }
+    
+  
+    // encrypt rest with new key file
+    await Promise.all(
+      data[0].slice(1).map(async (path) => {
+        try {
+          let stdout = await encrypt(path, parameters);
+  
+          logs.push(stdout);
+        } catch (err) {
+          logs.push(err);
+        }
+      })
+    );
+  }
+  // all other cases
+  // simply enc/dec all provided files
+  else{
+    await Promise.all(
+      data[0].map(async (path) => {
+        try {
+          let stdout = await encrypt(path, parameters);
+  
+          logs.push(stdout);
+        } catch (err) {
+          logs.push(err);
+        }
+      })
+    );
+  }
+
+
+  
 
 
   event.reply('encryption-logs', logs);

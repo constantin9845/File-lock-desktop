@@ -14,7 +14,8 @@ void fileHandler::encryptFile(const std::string& path, bool replaceFlag, bool mo
 	}
 	else{
 		// construct output file path
-		outputPath = getOutputPath("_"+getFileName(path), true);
+		outputPath =  createRootDir();
+		outputPath += "_"+getFileName(path);
 	}
 
 	if(!inputFile){
@@ -325,7 +326,8 @@ void fileHandler::encryptFile(const std::string& path, const std::string& keyPat
 	}
 	else{
 		// construct output file path
-		outputPath = getOutputPath("_"+getFileName(path), true);
+		outputPath = createRootDir();
+		outputPath += "_"+getFileName(path);
 	}
 
 	if(!inputFile){
@@ -691,6 +693,7 @@ std::string fileHandler::getOutputPath(const std::string& fileName, bool deleteO
 	// create new folder to store file + key
 	std::string targetFolder = std::string(homeDir) + "/Downloads/target/";
 	std::string outputPath = targetFolder+fileName;
+	
 
 	// delete existing directory
 	if(deleteOld){
@@ -708,6 +711,69 @@ std::string fileHandler::getOutputPath(const std::string& fileName, bool deleteO
 
 #endif
 }
+
+
+// construct output path for key
+// Stored in downloads directory
+std::string fileHandler::getOutputPath(const std::string& fileName, bool deleteOld, bool key){
+
+// check OS
+// windows
+#ifdef _WIN32
+
+	// get user name
+	const char* homeDir = std::getenv("USERPROFILE");
+
+	if(homeDir == nullptr){
+		std::cerr << "Failed to get USERPROFILE environment variable." << std::endl;
+        exit(1);
+	}
+
+	// construct target folder path
+	std::string targetFolder = std::string(homeDir) + "\\Downloads\\";
+	std::string outputPath = targetFolder+fileName;
+
+	// delete existing target directory
+	if(deleteOld){
+		if(std::filesystem::exists(targetFolder)){
+			std::filesystem::remove_all(targetFolder);
+		}
+
+		if(!std::filesystem::create_directory(targetFolder)){
+			std::cout<<"dir not created";
+			exit(10);
+		}
+	}
+
+	return outputPath;
+
+// Mac/Linux
+#else
+
+	// get user name
+	const char* homeDir = std::getenv("HOME");
+
+	if(homeDir == nullptr){
+		std::cerr << "Failed to get HOME environment variable." << std::endl;
+		exit(1);
+	}
+
+	// create new folder to store file + key
+	std::string targetFolder = std::string(homeDir) + "/Downloads/";
+	std::string outputPath = targetFolder+fileName;
+
+	// delete existing file
+	if(deleteOld){
+		if(std::filesystem::exists(outputPath)){
+			std::filesystem::remove(outputPath);
+		}
+	}
+
+	return outputPath;
+
+#endif
+}
+
 
 // Generate 128 bit key
 unsigned char* fileHandler::genKey(const int& keySize){
@@ -776,10 +842,10 @@ unsigned char* fileHandler::readKey(const std::string& path, const int& keySize)
 	return buffer;
 }
 
-// store key in key file
+// store key from key file
 void fileHandler::storeKey(unsigned char* key, const int& keySize){
 
-	std::string outputPath = getOutputPath("_key", false);
+	std::string outputPath = getOutputPath("_key", true, true);
 
 	std::ofstream keyOutput(outputPath, std::ios::binary);
 
@@ -797,7 +863,7 @@ void fileHandler::storeKey(unsigned char* key, const int& keySize){
 }
 
 // create target directory
-bool fileHandler::createRootDir(){
+std::string fileHandler::createRootDir(){
 	// check OS
 // windows
 #ifdef _WIN32
@@ -813,17 +879,26 @@ bool fileHandler::createRootDir(){
 	// construct path
 	std::string targetFolder = std::string(homeDir) + "\\Downloads\\target\\";
 
-	// delete if exists
-	if(std::filesystem::exists(targetFolder)){
-		std::filesystem::remove_all(targetFolder);
+	int counter = 1;
+	while(std::filesystem::exists(targetFolder)){
+		counter++;
+
+		if(counter == 2){
+			targetFolder = targetFolder.substr(0, targetFolder.size()-1);
+			targetFolder = targetFolder + std::to_string(counter) + "\\";
+		}
+		else{
+			targetFolder = targetFolder.substr(0, targetFolder.size()-2);
+			targetFolder = targetFolder + std::to_string(counter) + "\\";
+		}
 	}
 
 	// create target directory
 	if(!std::filesystem::create_directory(targetFolder)){
-		return false;
+		return "Could not create root directory";
 	}
 
-	return true;
+	return targetFolder;
 
 // Mac/Linux
 #else
@@ -839,63 +914,40 @@ bool fileHandler::createRootDir(){
 	// create new folder to store file + key
 	std::string targetFolder = std::string(homeDir) + "/Downloads/target/";
 
-	// delete if already exists
-	if(std::filesystem::exists(targetFolder)){
-		std::filesystem::remove_all(targetFolder);
+	int counter = 1;
+	while(std::filesystem::exists(targetFolder)){
+		counter++;
+
+		if(counter == 2){
+			targetFolder = targetFolder.substr(0, targetFolder.size()-1);
+			targetFolder = targetFolder + std::to_string(counter) + "/";
+		}
+		else{
+			targetFolder = targetFolder.substr(0, targetFolder.size()-2);
+			targetFolder = targetFolder + std::to_string(counter) + "/";
+		}
 	}
 
 	// create new target folder
 	if(!std::filesystem::create_directory(targetFolder)){
-		return false;
+		return "Could not create root directory";
 	}
 
-	return true;
+	return targetFolder;
 
 #endif
 }
 
 
 // Given file path create a relative path to Root directory in encryption directory
-std::string fileHandler::parsePath(const std::string& filePath, const std::string& path){
+std::string fileHandler::parsePath(const std::string& filePath, const std::string& path, const std::string& rootDir){
 
 	std::string relativePath = filePath.substr(path.size()-1);
 
-
-#ifdef _WIN32
-
-	// get username
-	const char* homeDir = std::getenv("USERPROFILE");
-
-	if(homeDir == nullptr){
-		std::cerr << "Failed to get USERPROFILE environment variable." << std::endl;
-        exit(1);
-	}
-
-	std::string targetFolder = std::string(homeDir) + "\\Downloads\\target";
-
-
-	return targetFolder+relativePath;
-
-
-#else
-
-	std::string outputPath;
-
-	// get username
-	const char* homeDir = std::getenv("HOME");
-
-	if(homeDir == nullptr){
-		std::cerr << "Failed to get HOME environment variable." << std::endl;
-		exit(1);
-	}
-
-	std::string targetFolder = std::string(homeDir) + "/Downloads/target/";
-
-	outputPath = targetFolder+relativePath;
+	std::string outputPath = rootDir+relativePath;
 
 	return outputPath;
 
-#endif
 }
 
 // create directory for provided path
