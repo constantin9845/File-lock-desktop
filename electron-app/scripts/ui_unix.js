@@ -166,12 +166,78 @@ const deny = document.getElementById('deny');
 
 confirm.addEventListener('click', async()=>{
 
+    displayLoader();
+
     ipcRenderer.send('path-collection', [[...fileCollection, ...dirCollection], paramCollection, keyPath]);
 
     ipcRenderer.removeListener('encryption-logs', handleEncryptionLogs);
 
     ipcRenderer.on('encryption-logs', handleEncryptionLogs)
 
+});
+
+deny.addEventListener('click', ()=>{
+    // Empty data
+    func.innerText = '';
+    mode.innerText = '';
+    keyS.innerText = '';
+    replace.innerText = '';
+    summ_list.innerHTML = '';
+    summaryContainer.style.transform = 'translate(-50%, 100%)';
+})
+
+
+// clear preview sections
+const clearFiles = document.getElementById('clear_files');
+const clearDir = document.getElementById('clear_dir');
+const clearKey = document.getElementById('clear_key');
+
+clearFiles.addEventListener('click', ()=>{
+    fileCollection = [];
+    fileList.innerHTML = '';
+});
+
+clearDir.addEventListener('click', ()=>{
+    dirCollection = [];
+    dirList.innerHTML = '';
+});
+
+clearKey.addEventListener('click', ()=>{
+    keyPath = 'n';
+    keyList.innerHTML = '';
+});
+
+
+
+// Logging response
+function handleEncryptionLogs(event, logs) {
+    let message = '';
+    for (let i = 0; i < logs.length; i++) {
+        message += logs[i];
+        message += '\n';
+    }
+
+    hideLoader();
+    hideSummary();
+
+    alert(message);
+}
+
+// Loading animation
+function displayLoader(){
+    const loader = document.getElementById('loader');
+
+    loader.style.display = 'block';
+}
+
+function hideLoader(){
+    const loader = document.getElementById('loader');
+
+    loader.style.display = 'none';
+}
+
+// Summary display
+function hideSummary(){
     // Empty data
     keyList.innerHTML = "";
     keyPath = 'n';
@@ -189,25 +255,5 @@ confirm.addEventListener('click', async()=>{
     fileCollection = [];
     dirCollection = [];
     paramCollection = [];
-});
-
-deny.addEventListener('click', ()=>{
-    // Empty data
-    func.innerText = '';
-    mode.innerText = '';
-    keyS.innerText = '';
-    replace.innerText = '';
-    summ_list.innerHTML = '';
-    summaryContainer.style.transform = 'translate(-50%, 100%)';
-})
-
-
-// Logging response
-function handleEncryptionLogs(event, logs) {
-    let message = '';
-    for (let i = 0; i < logs.length; i++) {
-        message += logs[i];
-        message += '\n';
-    }
-    alert(message);
 }
+

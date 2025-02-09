@@ -124,12 +124,13 @@ int main(int argc, char const *argv[]){
 
 	/*
 		LOGIC
-		argc == 7 : R flag => on / User key => yes and no
+		argc == 7 
 
-		argc == 6 : R flag => off / User key => yes and no
+			argv[6] -> -r (replace initial files) OR contains output path
+
 	*/
 
-	if(argc > 7 || argc < 6){
+	if(argc != 7){
 		std::cout<<"Wrong parameters: "<<argc<<std::endl;
 
 		for(int i = 0; i < argc; i++){
@@ -141,7 +142,8 @@ int main(int argc, char const *argv[]){
 	}
 
 	// replace flag
-	bool replaceFlag = (argc == 7);
+	std::string outPath = argv[6];
+	bool replaceFlag = (outPath == "-r");
 
 
 	// target path
@@ -192,27 +194,17 @@ int main(int argc, char const *argv[]){
 	if(directionFlag && !dirFlag){
 		// With user key 
 		if(ownKey){
-			fileHandler::encryptFile(path, keyPath, replaceFlag, mode, keySize);
-			if(replaceFlag){
-				message += fileHandler::getFileName(path)+" has been encrypted.\n";
-				std::cout<<message;
-			}
-			else{
-				message += fileHandler::getFileName(path)+" has been encrypted.\n";
-				std::cout<<message;
-			}
+			fileHandler::encryptFile(path, keyPath, replaceFlag, mode, keySize, outPath);
+
+			message += fileHandler::getFileName(path)+" has been encrypted.\n";
+			std::cout<<message;
 		}
 		// New key
 		else{
-			fileHandler::encryptFile(path, replaceFlag, mode, keySize);
-			if(replaceFlag){
-				message += fileHandler::getFileName(path)+" has been encrypted.\n";
-				std::cout<<message;
-			}
-			else{
-				message += fileHandler::getFileName(path)+" has been encrypted.\n";
-				std::cout<<message;
-			}
+			fileHandler::encryptFile(path, replaceFlag, mode, keySize, outPath);
+
+			message += fileHandler::getFileName(path)+" has been encrypted.\n";
+			std::cout<<message;
 		}
 
 		return 0;
@@ -221,6 +213,7 @@ int main(int argc, char const *argv[]){
 	// SINGLE FILE DECRYPTION
 	else if(!directionFlag && !dirFlag){
 		fileHandler::decryptFile(path, keyPath, mode, keySize);
+
 		message += fileHandler::getFileName(path)+" has been decrypted.\n";
 		std::cout<<message;
 		return 0;
@@ -241,11 +234,7 @@ int main(int argc, char const *argv[]){
 		}
 
 		// create new root dir / 
-		std::string rootDir = fileHandler::createRootDir();
-		if(rootDir == "Could not create root directory"){
-			std::cout<<"Could not create target Directory.";
-			exit(3);
-		}
+		std::string rootDir = outPath;
 		
 		// check if dir exists and if valid
 		if(std::filesystem::exists(parentDir) && std::filesystem::is_directory(parentDir)){

@@ -27,16 +27,15 @@ public:
 	    Output into Downloads/target/ with encrypted file + key file
      	@param path absolute filepath
 	*/
-	static void encryptFile(const std::string& path, bool replaceFlag, bool mode, int keySize);
+	static void encryptFile(const std::string& path, bool replaceFlag, bool mode, int keySize, const std::string& outPath);
 
 	/*
 	    Encrypt single file with user provided key
      	    key should be stored in a file -> first 16 bytes are read
-	    Output into Downloads/target/ 
 	    @param path absolute filepath
      	    @param keyPath absolute path of key file
 	*/
-	static void encryptFile(const std::string& path, const std::string& keyPath, bool replaceFlag, bool mode, int keySize);
+	static void encryptFile(const std::string& path, const std::string& keyPath, bool replaceFlag, bool mode, int keySize, const std::string& outPath);
 
 	/*
 	    Encrypts all files in specified directory (includes subdirectory files)

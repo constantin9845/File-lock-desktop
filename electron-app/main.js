@@ -17,6 +17,8 @@ const unixEXEC = 'g++ src/main.cpp src/fileHandler.cpp src/AES.cpp -o enc'
 const winRUN = '.\\a.exe';
 const unixRUN = './enc';
 
+var outputPath;
+
 app.on('ready', ()=>{
     if(platform == 'win32'){
       mainWindow = new BrowserWindow({
@@ -132,7 +134,6 @@ ipcMain.handle('select-key', async ()=>{
 ipcMain.on('path-collection', async(event,data)=>{
 
   // parameters
-  // parameters
   let KEY_FILE;
 
   let DIRECTION;
@@ -172,6 +173,12 @@ ipcMain.on('path-collection', async(event,data)=>{
   var logs = [];
   var keyPath;
   let newKey = true;
+
+  // create target directory
+  if(!R_FLAG){
+    outputPath = getNewDirectory();
+  }
+
 
   // build keypath if multiple files and ENCRYPTING
   // ensures key is re used
@@ -227,11 +234,7 @@ ipcMain.on('path-collection', async(event,data)=>{
       })
     );
   }
-
-
   
-
-
   event.reply('encryption-logs', logs);
 
 })
@@ -252,6 +255,50 @@ function checkFile(path){
   }
 }
 
+function getNewDirectory(){
+  let dir;
+
+  if(platform == 'darwin' || platform == 'linux'){
+    dir = app.getPath('downloads');
+    dir += '/target/';
+  }
+  else if(platform == 'win32'){
+    dir = app.getPath('downloads');
+    dir += '\\target\\';
+  }
+  else{
+    exit(3);
+  }
+
+  counter = 1;
+  while(fs.existsSync(dir)){
+    counter++;
+    
+    if(platform == 'darwin' || platform == 'linux'){
+      if(counter == 2){
+        dir = dir.substring(0, dir.length-1) + `${counter}/`; 
+      }
+      else{
+        dir = dir.substring(0, dir.length-2) + `${counter}/`;
+      }
+    }
+    else{
+      if(counter == 2){
+        dir = dir.substring(0, dir.length-1) + `${counter}\\`; 
+      }
+      else{
+        dir = dir.substring(0, dir.length-2) + `${counter}\\`;
+      }
+    }
+  }
+
+  // create the new directory
+  fs.mkdirSync(dir);
+
+  return dir;
+
+}
+
 
 // Encrypt Files
 function encrypt(path, parameters){
@@ -265,12 +312,18 @@ function encrypt(path, parameters){
       if(parameters[4]){
         command += ` -r`
       }
+      else{
+        command += ` ${outputPath}`;
+      }
     }
     else if(platform == 'win32'){
       command = `.\\a.exe "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
     
       if(parameters[4]){
         command += ` -r`
+      }
+      else{
+        command += ` ${outputPath}`;
       }
     }
     else{

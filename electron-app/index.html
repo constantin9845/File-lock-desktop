@@ -76,16 +76,19 @@
       <div class="preview">
         <div class="preview_files">
           <p>Files</p>
+          <div class="clear" id="clear_files">Clear</div>
           <ul id="fileList"></ul>
         </div>
 
         <div class="preview_files">
           <p>Directory</p>
+          <div class="clear" id="clear_dir">Clear</div>
           <ul id="dirList"></ul>
         </div>
 
         <div class="preview_files">
           <p>Key File</p>
+          <div class="clear" id="clear_key">Clear</div>
           <ul id="keyList"></ul>
         </div>
       </div>
@@ -141,7 +144,9 @@
         <button id="deny">No</button>
       </div>
     </div>
+    <div id="loader"></div>
   </div>
+
 
 </body>
 <script src="scripts/ui_unix.js" defer></script>

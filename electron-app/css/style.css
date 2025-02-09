@@ -218,6 +218,10 @@
     cursor: pointer;
 }
 
+.submit button:active{
+    transform: translateY(2px); 
+}
+
 
 
 /*
@@ -254,7 +258,7 @@ PREVIEW SECTION
 
 .preview_files:nth-child(1){
     height: 50%;
-    overflow-y: scroll;
+    overflow-y: none;
 }
 
 .preview_files:nth-child(2){
@@ -268,10 +272,9 @@ PREVIEW SECTION
 }
 
 .preview_files p{
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: #333;
-    margin-bottom: 8px;
 }
 
 .preview_files ul{
@@ -280,6 +283,7 @@ PREVIEW SECTION
     margin: 0;
     overflow-y: auto;
     border-radius: 8px;
+    border-top-right-radius: 0px;
     background: #F1F1F1;
     padding: 10px;
 }
@@ -296,15 +300,17 @@ PREVIEW SECTION
 }
 
 .preview_files:nth-child(1) ul{
-    height: 80%;
+    height: 70%;
 }
 
 .preview_files:nth-child(2) ul{
-    height: 50%;
+    height: 30%;
+    overflow: hidden;
 }
 
 .preview_files:nth-child(3) ul{
-    height: 50%;
+    height: 30%;
+    overflow: hidden;
 }
 
 
@@ -438,6 +444,10 @@ PREVIEW SECTION
     background: #005BBB;
 }
 
+#confirm:active{
+    transform: translateY(2px); 
+}
+
 #deny {
     background: #EAEAEA;
     color: #333;
@@ -447,4 +457,65 @@ PREVIEW SECTION
     background: #D6D6D6;
 }
 
+#deny:active{
+    transform: translateY(2px); 
+}
 
+
+/* 
+    LOADER
+*/
+#loader {
+    border: 10px solid #f3f3f3; 
+    border-top: 10px solid #3498db; 
+    border-radius: 50%;
+    width: 50px;  
+    height: 50px; 
+    animation: spin 1.5s linear infinite; 
+
+    position: relative;
+    z-index: 9999;
+    display: none;
+}
+  
+@keyframes spin {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}
+
+
+/* 
+    CLEAR BUTTONS
+*/
+
+.clear{
+    position: relative;
+
+    margin-left: auto;
+    margin-right: 0%;
+    width: 5%;
+    text-align: center;
+
+    background-color: #007aff; 
+    color: white;             
+    padding: 7px 14px;         
+    font-size: 14px;            
+    font-weight: 600;            
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;     
+    cursor: pointer;           
+    transition: all 0.3s ease;  
+}
+
+.clear:hover {
+    background-color: #0051a8;  
+}
+
+.clear:active {
+    background-color: #003b7d;  
+    transform: translateY(2px);  
+}

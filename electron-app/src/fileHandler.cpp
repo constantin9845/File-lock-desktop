@@ -1,7 +1,7 @@
 #include "../include/fileHandler.h"
 
 // Encrypt single file
-void fileHandler::encryptFile(const std::string& path, bool replaceFlag, bool mode, int keySize){
+void fileHandler::encryptFile(const std::string& path, bool replaceFlag, bool mode, int keySize, const std::string& outPath){
 
 	// input file stream
 	std::ifstream inputFile(path, std::ios::binary);
@@ -14,7 +14,7 @@ void fileHandler::encryptFile(const std::string& path, bool replaceFlag, bool mo
 	}
 	else{
 		// construct output file path
-		outputPath =  createRootDir();
+		outputPath = outPath;
 		outputPath += "_"+getFileName(path);
 	}
 
@@ -314,7 +314,7 @@ void fileHandler::encryptFile(const std::string& path, std::string outputPath, b
 }
 
 // Encrypt file with user provided key
-void fileHandler::encryptFile(const std::string& path, const std::string& keyPath, bool replaceFlag, bool mode, int keySize){
+void fileHandler::encryptFile(const std::string& path, const std::string& keyPath, bool replaceFlag, bool mode, int keySize, const std::string& outPath){
 	// input stream
 	std::ifstream inputFile(path, std::ios::binary);
 
@@ -326,7 +326,7 @@ void fileHandler::encryptFile(const std::string& path, const std::string& keyPat
 	}
 	else{
 		// construct output file path
-		outputPath = createRootDir();
+		outputPath = outPath;
 		outputPath += "_"+getFileName(path);
 	}
 
