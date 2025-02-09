@@ -330,6 +330,8 @@ function encrypt(path, parameters){
       return reject("Unsupported platform")
     }
 
+    console.log(command)
+
     exec(command, (error, stdout, stderr) =>{
 
       console.log(stdout);
