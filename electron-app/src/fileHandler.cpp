@@ -10,7 +10,7 @@ void fileHandler::encryptFile(const std::string& path, bool replaceFlag, bool mo
 
 	if(replaceFlag){
 		// create output path -> same as input
-		outputPath = getDecryptionFileName(path);
+		outputPath = path;
 	}
 	else{
 		// construct output file path
@@ -645,135 +645,6 @@ std::string fileHandler::getDecryptionFileName(const std::string& filePath){
 	return newName;
 }
 
-// construct output path
-// target directory in Downloads
-std::string fileHandler::getOutputPath(const std::string& fileName, bool deleteOld){
-
-// check OS
-// windows
-#ifdef _WIN32
-
-	// get user name
-	const char* homeDir = std::getenv("USERPROFILE");
-
-	if(homeDir == nullptr){
-		std::cerr << "Failed to get USERPROFILE environment variable." << std::endl;
-        exit(1);
-	}
-
-	// construct target folder path
-	std::string targetFolder = std::string(homeDir) + "\\Downloads\\target\\";
-	std::string outputPath = targetFolder+fileName;
-
-	// delete existing target directory
-	if(deleteOld){
-		if(std::filesystem::exists(targetFolder)){
-			std::filesystem::remove_all(targetFolder);
-		}
-
-		if(!std::filesystem::create_directory(targetFolder)){
-			std::cout<<"dir not created";
-			exit(10);
-		}
-	}
-
-	return outputPath;
-
-// Mac/Linux
-#else
-
-	// get user name
-	const char* homeDir = std::getenv("HOME");
-
-	if(homeDir == nullptr){
-		std::cerr << "Failed to get HOME environment variable." << std::endl;
-		exit(1);
-	}
-
-	// create new folder to store file + key
-	std::string targetFolder = std::string(homeDir) + "/Downloads/target/";
-	std::string outputPath = targetFolder+fileName;
-	
-
-	// delete existing directory
-	if(deleteOld){
-		if(std::filesystem::exists(targetFolder)){
-			std::filesystem::remove_all(targetFolder);
-		}
-
-		if(!std::filesystem::create_directory(targetFolder)){
-			std::cout<<"dir not created";
-			exit(10);
-		}
-	}
-
-	return outputPath;
-
-#endif
-}
-
-
-// construct output path for key
-// Stored in downloads directory
-std::string fileHandler::getOutputPath(const std::string& fileName, bool deleteOld, bool key){
-
-// check OS
-// windows
-#ifdef _WIN32
-
-	// get user name
-	const char* homeDir = std::getenv("USERPROFILE");
-
-	if(homeDir == nullptr){
-		std::cerr << "Failed to get USERPROFILE environment variable." << std::endl;
-        exit(1);
-	}
-
-	// construct target folder path
-	std::string targetFolder = std::string(homeDir) + "\\Downloads\\";
-	std::string outputPath = targetFolder+fileName;
-
-	// delete existing target directory
-	if(deleteOld){
-		if(std::filesystem::exists(targetFolder)){
-			std::filesystem::remove_all(targetFolder);
-		}
-
-		if(!std::filesystem::create_directory(targetFolder)){
-			std::cout<<"dir not created";
-			exit(10);
-		}
-	}
-
-	return outputPath;
-
-// Mac/Linux
-#else
-
-	// get user name
-	const char* homeDir = std::getenv("HOME");
-
-	if(homeDir == nullptr){
-		std::cerr << "Failed to get HOME environment variable." << std::endl;
-		exit(1);
-	}
-
-	// create new folder to store file + key
-	std::string targetFolder = std::string(homeDir) + "/Downloads/";
-	std::string outputPath = targetFolder+fileName;
-
-	// delete existing file
-	if(deleteOld){
-		if(std::filesystem::exists(outputPath)){
-			std::filesystem::remove(outputPath);
-		}
-	}
-
-	return outputPath;
-
-#endif
-}
-
 
 // Generate 128 bit key
 unsigned char* fileHandler::genKey(const int& keySize){
@@ -845,7 +716,31 @@ unsigned char* fileHandler::readKey(const std::string& path, const int& keySize)
 // store key from key file
 void fileHandler::storeKey(unsigned char* key, const int& keySize){
 
-	std::string outputPath = getOutputPath("_key", true, true);
+	std::string outputPath;
+
+#ifdef _WIN32
+	// get user name
+	const char* homeDir = std::getenv("USERPROFILE");
+
+	if(homeDir == nullptr){
+		std::cerr << "Failed to get USERPROFILE environment variable." << std::endl;
+        exit(1);
+	}
+
+	// construct path
+	outputPath = std::string(homeDir) + "\\Downloads\\_key";
+#else
+	// get user name
+	const char* homeDir = std::getenv("HOME");
+
+	if(homeDir == nullptr){
+		std::cerr << "Failed to get HOME environment variable." << std::endl;
+		exit(1);
+	}
+
+	// construct path
+	outputPath = std::string(homeDir) + "/Downloads/_key";
+#endif
 
 	std::ofstream keyOutput(outputPath, std::ios::binary);
 

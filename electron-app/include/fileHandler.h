@@ -77,18 +77,6 @@ public:
 	// returns string for absolute path of file
 	static std::string getDecryptionFileName(const std::string& filePath);
 
-	// Constructs output path for Downloads/target/
-	// Used for single file encryption
-	// @param fileName name of file
-	// @param deleteOld flag to delete existing Downloads/target/ file(s)
-	static std::string getOutputPath(const std::string& fileName, bool deleteOld);
-
-	// Constructs output path for Downloads/
-	// Used for storing new key file 
-	// @param fileName name of key file
-	// @param deleteOld flag to delete existing Downloads/target/ file(s)
-	static std::string getOutputPath(const std::string& fileName, bool deleteOld, bool key);
-
 	// Creates target directory in Downloads 
 	static std::string createRootDir();
 
