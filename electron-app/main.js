@@ -68,7 +68,6 @@ app.on('ready', ()=>{
     else if(platform == 'win32'){
 
       if(!fs.existsSync('.\\a.exe')){
-        console.log("create");
         exec(winEXEC, (error, stdout,stderr)=>{
           if(error){
             console.log(error.message);
@@ -80,9 +79,6 @@ app.on('ready', ()=>{
             return
           }
         })
-      }
-      else{
-        console.log("already there");
       }
     }
     else{
