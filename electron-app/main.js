@@ -317,7 +317,14 @@ function encrypt(path, parameters){
       }
     }
     else if(platform == 'win32'){
-      command = `.\\a.exe "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
+
+      if(checkFile(path) == 0){
+        command = `.\\a.exe "${path}\\" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
+      }
+      else{
+        command = `.\\a.exe "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
+      }
+
     
       if(parameters[4]){
         command += ` -r`
