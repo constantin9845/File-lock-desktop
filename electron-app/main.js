@@ -49,30 +49,41 @@ app.on('ready', ()=>{
 
     // compile c++ files
     if(platform == 'darwin' || platform == 'linux'){
-      exec(unixEXEC, (error, stdout,stderr)=>{
-        if(error){
-          console.log(error.message);
-          return;
-        }
 
-        if(stderr){
-          console.log(stderr);
-          return
-        }
-      });
+      // check if executable already exists
+      if(!fs.existsSync('./enc')){
+        exec(unixEXEC, (error, stdout,stderr)=>{
+          if(error){
+            console.log(error.message);
+            return;
+          }
+  
+          if(stderr){
+            console.log(stderr);
+            return
+          }
+        });
+      }
     }
     else if(platform == 'win32'){
-      exec(winEXEC, (error, stdout,stderr)=>{
-        if(error){
-          console.log(error.message);
-          return;
-        }
 
-        if(stderr){
-          console.log(stderr);
-          return
-        }
-      })
+      if(!fs.existsSync('.\\a.exe')){
+        console.log("create");
+        exec(winEXEC, (error, stdout,stderr)=>{
+          if(error){
+            console.log(error.message);
+            return;
+          }
+  
+          if(stderr){
+            console.log(stderr);
+            return
+          }
+        })
+      }
+      else{
+        console.log("already there");
+      }
     }
     else{
       process.exit();
