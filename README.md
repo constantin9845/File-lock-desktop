@@ -1,15 +1,7 @@
 ## File-lock UI
 
 
-### Fix
+## build problem
 
-
-### Tasks
-
-- create executable
-- build script
-
-
-
-
-
+executable path wrong -> /tmp/.mount?
+- fix

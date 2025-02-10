@@ -22,7 +22,7 @@ app.on('ready', ()=>{
         executablePath = path.join(process.resourcesPath, 'bin', 'win', 'enc.exe');
       }
       else{
-        executablePath = path.join(process.resourcesPath, 'bin', 'linux', 'enc');
+        executablePath = path.join(app.getAppPath(), 'resources', 'bin', 'win', 'enc.exe');
       }
       
     }
@@ -288,7 +288,7 @@ function encrypt(path, parameters){
     let command;
 
     if(platform == 'linux' || platform == 'darwin'){
-      command = `${executablePath} "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
+      command = `/${executablePath} "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
     
       if(parameters[4]){
         command += ` -r`

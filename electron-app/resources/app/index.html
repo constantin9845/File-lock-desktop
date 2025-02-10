@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self';">
+
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>File lock</title>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="input">
+        <section class="upload_section">
+          <h2>Select Files</h2>
+          <button id="selectFilesBtn">&#9111;</button>
+        </section>
+      
+        <section class="upload_section">
+          <h2>Select Directory</h2>
+          <button id="selectDirsBtn">&#9111;</button>
+        </section>
+  
+        <section class="upload_section">
+          <h2>Select Key file</h2>
+          <button id="selectKeyBtn">&#9111;</button>
+        </section>
+      
+        <section class="params">
+  
+          <div class="param_section">
+            <h4>Function</h4>
+            <select id="direction">
+              <option value="Encryption">Encryption</option>
+              <option value="Decryption">Decryption</option>
+            </select>
+          </div>
+          
+          <div class="param_section">
+            <h4>Mode</h4>
+            <select name="mode" id="mode">
+              <option value="ECB">ECB</option>
+              <option value="CBC">CBC</option>
+            </select>
+          </div>
+          
+          <div class="param_section">
+            <h4>Key Size</h4>
+            <select name="keySize" id="keySize">
+              <option value="128">128</option>
+              <option value="192">192</option>
+              <option value="256">256</option>
+            </select>
+          </div>
+          
+          <div class="checkbox_container">
+            <div class="param_checkboxes">
+              <label for="newKey">New Key</label>
+              <input type="checkbox" id="newKeyBtn" value="New Key">
+            </div>
+        
+            <div class="param_checkboxes">
+              <label for="replaceFlag">Replace Files</label>
+              <input type="checkbox" id="replaceFlag" value="Replace Files">
+            </div>
+          </div>
+        </section>
+  
+        <div class="submit">
+          <button id="encBtn">Submit</button>
+        </div>
+      </div>
+      <div class="preview">
+        <div class="preview_files">
+          <p>Files</p>
+          <div class="clear" id="clear_files">Clear</div>
+          <ul id="fileList"></ul>
+        </div>
+
+        <div class="preview_files">
+          <p>Directory</p>
+          <div class="clear" id="clear_dir">Clear</div>
+          <ul id="dirList"></ul>
+        </div>
+
+        <div class="preview_files">
+          <p>Key File</p>
+          <div class="clear" id="clear_key">Clear</div>
+          <ul id="keyList"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="summary_container" class="summary_container">
+    <div class="title">
+      <p>Summary</p>
+    </div>
+    <div class="summary_box">
+
+      <div class="summary_files">
+        <ul id="summ_list"></ul>
+      </div>
+
+      <div class="function">
+        <p>Function: </p>
+        <p id="summ_function"></p>
+      </div>
+
+      <div class="function">
+        <p>Mode: </p>
+        <p id="summ_mode"></p>
+      </div>
+
+      <div class="function">
+        <p>Key Size: </p>
+        <p id="summ_keySize"></p>
+      </div>
+
+      <div class="function">
+        <p>Key File: </p>
+        <p id="summ_keyFilePath"></p>
+      </div>
+
+      <div class="function">
+        <p>Replace File(s): </p>
+        <p id="summ_replaceFiles"></p>
+      </div>
+    </div>
+    <div class="warning">
+      <p>Decrypting files with the wrong key permanently scrambles files.</p>
+      <p>If file(s) broken after decryption:</p>
+      <p>*** 1)Encrypt with same parameters and key</p>
+      <p>*** 2)This returns files to their previous state.</p>
+      <p>Retry with correct key/parameters again.</p>
+    </div>
+    <div class="summary_submit">
+      <p>Confirm</p>
+      <div class="summary_submit_btn">
+        <button id="confirm">Yes</button>
+        <button id="deny">No</button>
+      </div>
+    </div>
+    <div id="loader"></div>
+  </div>
+
+
+</body>
+<script src="scripts/ui_unix.js" defer></script>
+</html>

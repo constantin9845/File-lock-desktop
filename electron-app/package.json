@@ -4,12 +4,38 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "node build.js && electron .",
+    "build": "node build.js && electron-builder"
+  },
+  "build": {
+    "appId": "com.jam.filelock",
+    "productName": "File Lock",
+    "directories": {
+      "output": "resources/output"
+    },
+    "extraResources": [
+      {
+        "from": "bin/${os}",
+        "to": "bin"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/padlock_78356.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/padlock_78356.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/padlock_78356.png"
+    }
   },
   "author": "KYA",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^34.0.1"
+    "electron": "^34.0.1",
+    "electron-builder": "^25.1.8"
   }
 }
