@@ -16,7 +16,7 @@
     },
     "extraResources": [
       {
-        "from": "bin/${os}",
+        "from": "resources/bin/${os}",
         "to": "bin"
       }
     ],

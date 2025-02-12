@@ -305,10 +305,10 @@ function encrypt(path, parameters){
     else if(platform == 'win32'){
 
       if(checkFile(path) == 0){
-        command = `.\\${executablePath} "${path}\\" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
+        command = `${executablePath} "${path}\\" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
       }
       else{
-        command = `.\\${executablePath} "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
+        command = `${executablePath} "${path}" ${parameters[0]} ${parameters[1]} ${parameters[2]} "${parameters[3]}"`;
       }
 
     
