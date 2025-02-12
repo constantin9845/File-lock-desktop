@@ -1,7 +1,7 @@
 ## File-lock UI
 
 
-## build problem
+## To do
 
-executable path wrong -> /tmp/.mount?
-- fix
+- desktop file linux -> to open w/ icon
+- signatures
