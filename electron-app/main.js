@@ -19,18 +19,23 @@ let executablePath;
 app.on('ready', ()=>{
     if(app.isPackaged){
       if(process.platform === 'win32'){
-        executablePath = path.join(process.resourcesPath, 'bin', 'win', 'enc.exe');
+        executablePath = path.join(process.resourcesPath, 'bin', 'enc.exe');
       }
       else{
-        executablePath = path.join(process.resourcesPath, 'bin', 'linux', 'enc');
+        executablePath = path.join(process.resourcesPath, 'bin', 'enc');
       }
       
-    }
+    } 
     else{
-      executablePath = path.join(__dirname, 'bin', 'enc');
+      if(platform == 'win32'){
+        executablePath = path.join(__dirname, 'bin', 'win', 'enc.exe');
+      }
+      else if(platform == 'darwin' || platform == 'linux'){
+        executablePath = path.join(__dirname, 'bin', 'linux', 'enc');
+      }
     }
 
-    console.log(executablePath);
+    console.log("Executeable path: " +executablePath);
 
     if(platform == 'win32'){
       mainWindow = new BrowserWindow({

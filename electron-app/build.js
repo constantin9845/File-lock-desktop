@@ -10,8 +10,8 @@ if (!fs.existsSync(outputDir)) {
 }
 
 const compileCommand = platform === 'win32'
-  ? 'g++ .\\src\\main.cpp .\\src\\fileHandler.cpp .\\src\\AES.cpp -o bin\\win\\enc.exe'
-  : `g++ src/main.cpp src/fileHandler.cpp src/AES.cpp -o bin/${platform}/enc`;
+  ? 'g++ .\\src\\main.cpp .\\src\\fileHandler.cpp .\\src\\AES.cpp -o resources\\bin\\win\\enc.exe'
+  : `g++ src/main.cpp src/fileHandler.cpp src/AES.cpp -o resources/bin/${platform}/enc`;
 
 exec(compileCommand, (error, stdout, stderr) => {
   if (error) {
