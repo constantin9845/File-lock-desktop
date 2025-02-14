@@ -1,5 +1,6 @@
 # :lock: **file-lock Desktop**  
 *Cross-platform AES encryption for individual files and directories*  
+*CLI Version -> https://github.com/constantin9845/file-lock*
 
 ---
 
