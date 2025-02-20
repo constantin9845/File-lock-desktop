@@ -7,16 +7,6 @@
 <br>
 
 
-### 🔆 **Encryption Made Simple**
-*Terminal Commands No More!*
-<p align="center">
-  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnJpdjd5a2E3ZGJ0aW04cXF6bWtkMHBjOG1wc2I2NmZvcGNiNGVnMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/TxYTQZtxqwlRRbYd5E/giphy.gif"  />
-</p>
-
----
-<br>
-<br>
-
 
 ### 🏗️ **Build**
 The following is required to build the application:
