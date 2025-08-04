@@ -1,0 +1,52 @@
+{
+  "name": "filelock",
+  "version": "1.0.0",
+  "description": "",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "build": "node build.js && electron .",
+    "run": "electron ."
+  },
+  "homepage": "https://github.com/constantin9845/file-lock",
+  "build": {
+    "appId": "com.jam.filelock",
+    "productName": "FileLock",
+    "directories": {
+      "output": "resources/output"
+    },
+    "extraResources": [
+      {
+        "from": "resources/bin/${os}",
+        "to": "bin"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/padlock_78356.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/padlock_78356.icns"
+    },
+    "linux": {
+      "target": "deb",
+      "category": "Utility",
+      "icon": "build/padlock_78356.png"
+    },
+    "deb": {
+      "fpm": [
+        "--deb-no-default-config-files"
+      ]
+    }
+  },
+  "author": {
+    "name": "Mr Jam",
+    "email": "jamcity4516@gmail.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^34.5.8",
+    "electron-builder": "^25.1.8"
+  }
+}
