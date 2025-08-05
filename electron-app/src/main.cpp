@@ -95,56 +95,39 @@ int main(int argc, char const *argv[]){
 	std::string star = t.filename().string();
 	std::string outputFilePath = "";
 
-#ifdef _WIN32
 
+	std::string newDirName;
+
+	// Create target directory in Downloads if no replace flag set
+	if(!replaceFlag && custom_output == "n"){
+
+		if(directionFlag){
+			if(!fileHandler::createRootDir(newDirName)){
+				std::cout<<"Could not create target Directory.";
+				exit(3);
+			}
+		}
+	}
+
+#ifdef _WIN32
 	// set directory flag
 	dirFlag = (star.size() == 0);
-
-	if(!dirFlag && !replaceFlag){
-
-		if(custom_output == "n"){
-			const char* homeDir = std::getenv("USERPROFILE");
-
-			if(homeDir == nullptr){
-				std::cerr << "Failed to get USERPROFILE environment variable." << std::endl;
-				exit(1);
-			}
-
-			outputFilePath = std::string(homeDir) + "\\Downloads\\target\\"+star;
-		}	
-		else{
-			outputFilePath = custom_output+star;
-		}
-
-		
-			
-	}
-
 #else
-
 	// set directory flag
 	dirFlag = (star == "*");
+#endif
 
 	if(!dirFlag && !replaceFlag){
 
 		if(custom_output == "n"){
-			// get username
-			const char* homeDir = std::getenv("HOME");
 
-			if(homeDir == nullptr){
-				std::cerr << "Failed to get HOME environment variable." << std::endl;
-				exit(1);
-			}
-
-			outputFilePath = std::string(homeDir) + "/Downloads/target/"+star;
+			outputFilePath = newDirName+star;
 		}
 		else{
 			outputFilePath = custom_output+star;
 		}
 		
 	}
-
-#endif
 
 	std::string message = "\n\n";
 
@@ -170,16 +153,6 @@ int main(int argc, char const *argv[]){
 			std::cout<<std::endl;
 			std::cout<<"Key used: "<<keyPath<<std::endl;
 			std::cout<<std::endl;
-		}
-
-		std::string newDirName;
-
-		// Create target directory in Downloads if no replace flag set
-		if(!replaceFlag && custom_output == "n"){
-			if(!fileHandler::createRootDir(newDirName)){
-				std::cout<<"Could not create target Directory.";
-				exit(3);
-			}
 		}
 
 		// SINGLE FILE

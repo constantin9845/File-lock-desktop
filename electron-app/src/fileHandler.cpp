@@ -453,7 +453,7 @@ void fileHandler::AES_GCM(const std::string& path, unsigned char* key, const boo
 
 
 	if(!inputFile){
-		std::cout<<"Error opening file.";
+		std::cout<<"Could not open file: "<<path;
 		exit(2);
 	}
 
@@ -544,7 +544,7 @@ void fileHandler::AES_GCM(const std::string& path, unsigned char* key, const boo
 	if(!outputFile.write(reinterpret_cast<char*>(buffer), size+padding+12)){
 		delete[] buffer;
 		delete[] nonce;
-		std::cout<<"error write";
+		std::cout<<"Could not write to output file: "<<outputPath;
 		exit(3);
 	}
 
@@ -606,7 +606,7 @@ void fileHandler::AES_GCM_DECRYPTION(const std::string& path, unsigned char* key
 	std::string outputPath = path;
 
 	if(!inputFile){
-		std::cout<<"Error opening file.";
+		std::cout<<"Could not open file: "<<path<<std::endl;
 		exit(2);
 	}
 
@@ -648,8 +648,8 @@ void fileHandler::AES_GCM_DECRYPTION(const std::string& path, unsigned char* key
 		unsigned char* CLAIMED_TAG = new unsigned char[16];
 
 		if(!tag_file){
-			std::cout<<"Error opening tag.";
-			exit(2);
+			std::cout<<"Error / Missing Authentication Tag.";
+			exit(40);
 		}
 
 		// read tag
@@ -739,7 +739,7 @@ void fileHandler::AES_GCM_DECRYPTION(const std::string& path, unsigned char* key
 	if(!outputFile.write(reinterpret_cast<char*>(buffer+12), size-padding)){
 		delete[] buffer;
 		delete[] nonce;
-		std::cout<<"error write";
+		std::cout<<"Could not write to output file: "<<outputPath;
 		exit(3);
 	}
 
@@ -769,7 +769,7 @@ void fileHandler::HW_AES_GCM(const std::string& path, unsigned char* key, const 
 
 
 	if(!inputFile){
-		std::cout<<"Error opening file : "<<path<<std::endl;;
+		std::cout<<"Error opening file : "<<path<<std::endl;
 
 		exit(2);
 	}
@@ -860,7 +860,7 @@ void fileHandler::HW_AES_GCM(const std::string& path, unsigned char* key, const 
 	if(!outputFile.write(reinterpret_cast<char*>(buffer), size+padding+12)){
 		delete[] buffer;
 		delete[] nonce;
-		std::cout<<"error write";
+		std::cout<<"Could not write to output file: "<<outputPath;
 		exit(3);
 	}
 	outputFile.close();
@@ -922,7 +922,7 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 	std::string outputPath = path;
 
 	if(!inputFile){
-		std::cout<<"Error opening file.";
+		std::cout<<"Could not read file: "<<path;
 		exit(2);
 	}
 
@@ -945,6 +945,7 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 	if(!inputFile.read(reinterpret_cast<char*>(buffer),size)){
 		std::cout<<"Could not read data into buffer";
 		delete[] buffer;
+		delete[] nonce;
 		exit(2);
 	}
 
@@ -964,8 +965,11 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 		unsigned char* CLAIMED_TAG = new unsigned char[16];
 
 		if(!tag_file){
-			std::cout<<"Error opening tag.";
-			exit(2);
+			std::cout<<"Error / Missing Authentication Tag.";
+			delete[] buffer;
+			delete[] CLAIMED_TAG;
+			delete[] nonce;
+			exit(40);
 		}
 
 		// read tag
@@ -1013,6 +1017,7 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 
 			delete[] CLAIMED_TAG;
 			delete[] TAG;
+			delete[] ADD;
 		}
 	}
 
@@ -1054,7 +1059,10 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 	if(!outputFile.write(reinterpret_cast<char*>(buffer+12), size-padding)){
 		delete[] buffer;
 		delete[] nonce;
-		std::cout<<"error write";
+		delete[] CLAIMED_TAG;
+		delete[] TAG;
+		delete[] ADD;
+		std::cout<<"Could not write to output file: "<<outputPath;
 		exit(3);
 	}
 
@@ -1062,6 +1070,9 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 
 	delete[] nonce;
 	delete[] buffer;
+	delete[] CLAIMED_TAG;
+	delete[] TAG;
+	delete[] ADD;
 }
 
 

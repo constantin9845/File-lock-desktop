@@ -205,7 +205,7 @@ ipcMain.on('path-collection', async(event,data)=>{
         KEY_FILE = keyPath;
         parameters[8] = 'create'; // tells fileHandler to create a new key with path provided
 
-        temp = (parameters[8] == 'create');
+        temp = true;
         for(const path of data[0]){
           try{
             //console.log(`**KEY_FILE: ${KEY_FILE}**`);
@@ -229,13 +229,7 @@ ipcMain.on('path-collection', async(event,data)=>{
         await Promise.all(
           data[0].slice(0).map(async (path) => {
             try {
-              //console.log(`**KEY_FILE: ${KEY_FILE}**`);
-              //console.log(`**TEMP: ${temp}**`);
               let stdout = await encrypt(path, parameters);
-              if(temp){
-                parameters[8] = "false"; // remove key file creation flag
-                temp = false;
-              }
               logs.push(stdout);
             } catch (err) {
               logs.push(err);
@@ -376,10 +370,22 @@ function encrypt(path, parameters){
 
     exec(command, (error, stdout, stderr) =>{
 
-      //console.log(stdout);
+      console.log(stdout);
 
-      if(error){ reject(error); }
-      else{ resolve(stdout) }
+      if(error){ 
+
+        if(error.code == 40){
+          dialog.showErrorBox("Error: ","Error / No Authnetication Tag found.");
+        }
+        else if(error.code == 2){
+          dialog.showErrorBox("Error: ","Could not read Authnetication Tag.");
+        }
+
+        reject(error);
+      }
+      else{ 
+        resolve(stdout);
+      }
     })
   })
 

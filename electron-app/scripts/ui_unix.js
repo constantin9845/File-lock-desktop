@@ -100,46 +100,42 @@ encBtn.addEventListener('click',async ()=>{
         return;
     }
 
-    // KEY
-    // 1. Encryption:
+    // CHECKING FOR INPUT ERRORS
+
+    // ENCRYPTION
     if(encryption){
-        // 1.1 Encryption + new key checked
-        if(document.getElementById('newKeyBtn').checked){
-            keyPath = 'n';
+        /// KEY
+        if(!document.getElementById('newKeyBtn').checked && keyPath == "n"){
+            alert("Select a new key or provide one.");
+            return;
         }
-        // 1.2 Encryption + own key
-        else{
-            if(keyPath == "n"){
-                alert('Provide or generate new key.');
+
+        /// AD REQUIRES AD MESSAGE + AUTH OPTION
+        if(document.getElementById('ADFlag').checked){
+            if(document.getElementById('AD').value.length == 0){
+                alert("Enter Additional Message.");
+                return;
+            }
+
+            if(!document.getElementById('authFlag').checked){
+                alert("Must select Authentication Tag option to add an Additional message.");
                 return;
             }
         }
     }
-    // 2. Decryption
+    // DECRYPTION
     else{
-        // 2.1 Decryption + new key selected
-        if(document.getElementById('newKeyBtn').checked){
-                alert('Provide key for decryption.');
-                return;
+        /// KEY
+        if(keyPath == "n"){
+            alert("Select Key File for Decryption.");
+            return;
         }
-        // 2.2 Decryption + own key
-        else{
-            if(keyPath == "n"){
-                alert('Provide key for decryption.');
-                return;
-            }
+
+        /// AD REQUIRES AUTH OPTION
+        if(document.getElementById('ADFlag').checked && !document.getElementById('authFlag').checked){
+            alert("Must select Authentication Tag option to add an Additional message.");
+            return;
         }
-    }
-
-
-    // ADDITIONAL MESSAGE DATA
-    if(encryption &&
-        document.getElementById('ADFlag').checked &&
-        document.getElementById('AD').value.length == 0
-    )
-    {
-        alert(`Must enter Additional Message.`);
-        return;
     }
 
 
@@ -147,8 +143,8 @@ encBtn.addEventListener('click',async ()=>{
     // If encryption w/ no R FLAG 
     //  if both files + directory -> reject
     //  directory will overwrite files
-    if(!document.getElementById('replaceFlag').checked && (dirCollection.length == 1 && fileCollection.length > 1)){
-        alert("When not replacing original files: Encrypt files and directories separately.");
+    if(dirCollection.length == 1 && fileCollection.length >= 1){
+        alert("Encrypt files and directories separately.");
         return;
     }
 
