@@ -10,7 +10,7 @@ if (!fs.existsSync(outputDir)) {
 }
 
 const compileCommand = platform === 'win32'
-  ? 'g++ .\\src\\main.cpp .\\src\\fileHandler.cpp .\\src\\AES.cpp -o resources\\bin\\win\\enc.exe'
+  ? 'g++ -std=c++17 -maes -mpclmul "-msse4.1" -O2 .\\src\\main.cpp .\\src\\fileHandler.cpp .\\src\\AES.cpp -o resources\\bin\\win\\enc.exe'
   : `g++ -std=c++17 -maes -mpclmul "-msse4.1" -O2 src/main.cpp src/fileHandler.cpp src/AES.cpp -o resources/bin/${platform}/enc`;
 
 //const compileCommand = 'make'

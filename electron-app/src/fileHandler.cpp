@@ -490,6 +490,7 @@ void fileHandler::AES_GCM(const std::string& path, unsigned char* key, const boo
 	if(!inputFile.read(reinterpret_cast<char*>(buffer+12),size)){
 		std::cout<<"Could not read data into buffer";
 		delete[] buffer;
+		delete[] nonce;
 		exit(2);
 	}
 
@@ -695,10 +696,10 @@ void fileHandler::AES_GCM_DECRYPTION(const std::string& path, unsigned char* key
 
 			std::filesystem::remove(TAG_path);
 			std::filesystem::remove(AD_path);
-
-			delete[] CLAIMED_TAG;
-			delete[] TAG;
 		}
+
+		delete[] TAG;
+		delete[] CLAIMED_TAG;
 	}
 
 	// Parallell Decryption
@@ -1014,11 +1015,11 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 
 			std::filesystem::remove(TAG_path);
 			std::filesystem::remove(AD_path);
-
-			delete[] CLAIMED_TAG;
-			delete[] TAG;
-			delete[] ADD;
 		}
+
+		delete[] CLAIMED_TAG;
+		delete[] TAG;
+		delete[] ADD;
 	}
 
 	// Parallell Decryption
@@ -1059,9 +1060,6 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 	if(!outputFile.write(reinterpret_cast<char*>(buffer+12), size-padding)){
 		delete[] buffer;
 		delete[] nonce;
-		delete[] CLAIMED_TAG;
-		delete[] TAG;
-		delete[] ADD;
 		std::cout<<"Could not write to output file: "<<outputPath;
 		exit(3);
 	}
@@ -1070,9 +1068,6 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 
 	delete[] nonce;
 	delete[] buffer;
-	delete[] CLAIMED_TAG;
-	delete[] TAG;
-	delete[] ADD;
 }
 
 

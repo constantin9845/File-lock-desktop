@@ -5,8 +5,9 @@
   "type": "commonjs",
   "main": "main.js",
   "scripts": {
-    "build": "node build.js && electron .",
-    "run": "electron ."
+    "compile": "node build.js && electron .",
+    "run": "electron .",
+    "build": "electron build.js && electron-builder"
   },
   "homepage": "https://github.com/constantin9845/file-lock",
   "build": {
