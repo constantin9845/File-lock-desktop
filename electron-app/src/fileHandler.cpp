@@ -1006,11 +1006,9 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 
 		// Compare tags
 		if(memcmp(TAG, CLAIMED_TAG, 16) != 0){
-			std::string t;
 			std::cout<<"---- TAG AUTHENTICATION FAILED."<<std::endl;
 		}
 		else{
-			std::string t;
 			std::cout<<"---- TAG AUTHENTICATED."<<std::endl;
 
 			std::filesystem::remove(TAG_path);
@@ -1019,7 +1017,6 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 
 		delete[] CLAIMED_TAG;
 		delete[] TAG;
-		delete[] ADD;
 	}
 
 	// Parallell Decryption

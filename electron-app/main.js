@@ -330,7 +330,7 @@ function encrypt(path, parameters){
 
     // ADJUST command -> dont omit any params, just add all in different ways.
 
-    // [execpath] [path] [enc/dec] [keySize] "[keyfile/n]" [r/n] [auth/n] [AD/n] "[AD message]" "[output dir/n]" "[create = create key with this name]"
+    // [execpath] [path] [enc/dec] [keySize] "[keyfile/n]" [r/n] [auth/n] [AD/n] "[AD message]" "[output dir/n]" [create = create key with this name]
 
   return new Promise((resolve, reject)=>{
     let command;
@@ -342,10 +342,10 @@ function encrypt(path, parameters){
     else if(platform == 'win32'){
 
       if(checkFile(path) == 0){
-        command = `${executablePath} "${path}\\" ${parameters[0]} ${parameters[1]} "${parameters[2]}" ${parameters[3]} ${parameters[4]} ${parameters[5]} "${parameters[6]}" "${parameters[7]}" "${parameters[8]}"`;
+        command = `${executablePath} "${path}\\" ${parameters[0]} ${parameters[1]} "${parameters[2]}" ${parameters[3]} ${parameters[4]} ${parameters[5]} "${parameters[6]}" "${parameters[7]}" ${parameters[8]}`;
       }
       else{
-        command = `${executablePath} "${path}" ${parameters[0]} ${parameters[1]} "${parameters[2]}" ${parameters[3]} ${parameters[4]} ${parameters[5]} "${parameters[6]}" "${parameters[7]}" "${parameters[8]}"`;
+        command = `${executablePath} "${path}" ${parameters[0]} ${parameters[1]} "${parameters[2]}" ${parameters[3]} ${parameters[4]} ${parameters[5]} "${parameters[6]}" "${(parameters[7] != "n" ? parameters[7].slice(0,-1) : "n")}" ${parameters[8]}`;
       }
 
     }

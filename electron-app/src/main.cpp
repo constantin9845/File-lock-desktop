@@ -67,12 +67,23 @@ int main(int argc, char const *argv[]){
 		AD = temp;
 	}
 
-	
-	bool create_custom_key = false;
+
 	std::string custom_output = argv[9];
+#ifdef _WIN32
+	if(custom_output != "n"){
+		custom_output += "\\";
+	}
+#endif
+
+	std::cout<<"****"<<argc<<std::endl;
+	for(int i = 0; i < argc; i++){
+		std::cout<<argv[i]<<std::endl;
+	}
+	std::cout<<"****"<<argc<<std::endl;
+	
 
 	temp = argv[10];
-	create_custom_key = (temp == "create");
+	bool create_custom_key = (temp == "create");
 
 	bool dirFlag;
 
@@ -263,10 +274,10 @@ int main(int argc, char const *argv[]){
 			
 
 			if(hw_available){
-				fileHandler::HW_AES_GCM_DECRYPTION(path, k, keySize, authTag, AD=="y");
+				fileHandler::HW_AES_GCM_DECRYPTION(path, k, keySize, authTag, (AD=="y"));
 			}
 			else{
-				fileHandler::AES_GCM_DECRYPTION(path, k, keySize, authTag, AD=="y");
+				fileHandler::AES_GCM_DECRYPTION(path, k, keySize, authTag, (AD=="y"));
 			}
 
 			
