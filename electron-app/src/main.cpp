@@ -75,11 +75,13 @@ int main(int argc, char const *argv[]){
 	}
 #endif
 
+	/*
 	std::cout<<"****"<<argc<<std::endl;
 	for(int i = 0; i < argc; i++){
 		std::cout<<argv[i]<<std::endl;
 	}
 	std::cout<<"****"<<argc<<std::endl;
+	*/
 	
 
 	temp = argv[10];
@@ -145,8 +147,8 @@ int main(int argc, char const *argv[]){
 	// ENCRYPTION
 	if(directionFlag){
 
-		std::cout<<"Encryption:"<<std::endl;
 		std::cout<<std::endl;
+		std::cout<<"Encryption:"<<std::endl;
 
 		unsigned char* key;
 
@@ -163,7 +165,6 @@ int main(int argc, char const *argv[]){
 
 			std::cout<<std::endl;
 			std::cout<<"Key used: "<<keyPath<<std::endl;
-			std::cout<<std::endl;
 		}
 
 		// SINGLE FILE
@@ -171,7 +172,6 @@ int main(int argc, char const *argv[]){
 
 			auto start = std::chrono::high_resolution_clock::now();
 
-			std::cout<<std::endl;
 			std::cout<<"-- "<<path<<std::endl;
 
 			if(hw_available){
@@ -187,12 +187,9 @@ int main(int argc, char const *argv[]){
 			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
 			if(!replaceFlag){
-				std::cout<<std::endl;
 				std::cout<<"Saved in : "<<outputFilePath<<std::endl;
-				std::cout<<std::endl;
 			}
 
-			std::cout<<std::endl;
 			std::cout<<"Finished in : "<<duration.count() << " ms"<<std::endl;
 			std::cout<<std::endl;
 
@@ -225,7 +222,6 @@ int main(int argc, char const *argv[]){
 						}
 
 						// logs
-						std::cout<<std::endl;
 						std::cout<<"-- "<<entry.path().string()<<std::endl;
 
 						// encrypt entry
@@ -245,10 +241,7 @@ int main(int argc, char const *argv[]){
 				if(!replaceFlag){
 					std::cout<<std::endl;
 					std::cout<<"Saved in : "<<newDirName<<std::endl;
-					std::cout<<std::endl;
 				}
-
-				std::cout<<std::endl;
 
 				std::cout<<"Finished in : "<<duration.count() << " ms"<<std::endl;
 			}
@@ -267,7 +260,6 @@ int main(int argc, char const *argv[]){
 		// SINGLE FILE
 		if(!dirFlag){
 
-			std::cout<<std::endl;
 			std::cout<<"-- "<<path<<std::endl;
 
 			auto start = std::chrono::high_resolution_clock::now();
@@ -285,7 +277,6 @@ int main(int argc, char const *argv[]){
 			
 			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-			std::cout<<std::endl;
 			std::cout<<"Finished in : "<<duration.count() << " ms"<<std::endl;
 
 			return 0;
@@ -313,7 +304,6 @@ int main(int argc, char const *argv[]){
 					){
 						
 						// logs
-						std::cout<<std::endl;
 						std::cout<<"-- "<<entry.path().string()<<std::endl;
 						
 						if(hw_available){
@@ -330,7 +320,6 @@ int main(int argc, char const *argv[]){
 
 				auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-				std::cout<<std::endl;
 				std::cout<<"Finished in : "<<duration.count() << " ms"<<std::endl;
 
 			}

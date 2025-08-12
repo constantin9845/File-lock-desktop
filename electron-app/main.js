@@ -208,8 +208,6 @@ ipcMain.on('path-collection', async(event,data)=>{
         temp = true;
         for(const path of data[0]){
           try{
-            //console.log(`**KEY_FILE: ${KEY_FILE}**`);
-            //console.log(`**TEMP: ${temp}**`);
             let stdout = await encrypt(path, parameters);
             if (temp) {
               parameters[8] = "false";
@@ -240,6 +238,7 @@ ipcMain.on('path-collection', async(event,data)=>{
 
     }
     else{
+      /*
       await Promise.all(
         data[0].slice(0).map(async (path) => {
           try {
@@ -250,12 +249,23 @@ ipcMain.on('path-collection', async(event,data)=>{
           }
         })
       );
+      */
+      for(const path of data[0]){
+          try{
+            let stdout = await encrypt(path, parameters);
+            logs.push(stdout);
+          }
+          catch(err){
+            logs.push(err);
+          }
+      }
     }
     
   }
 
   // 1 file / 1 dir
   else{
+    /*
     await Promise.all(
       data[0].map(async (path) => {
         try {
@@ -267,6 +277,16 @@ ipcMain.on('path-collection', async(event,data)=>{
         }
       })
     );
+    */
+    for(const path of data[0]){
+      try{
+        let stdout = await encrypt(path, parameters);
+        logs.push(stdout);
+      }
+      catch(err){
+        logs.push(err);
+      }
+    }
   }
   
   event.reply('encryption-logs', logs);

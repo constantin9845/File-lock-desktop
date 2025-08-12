@@ -668,7 +668,7 @@ void fileHandler::AES_GCM_DECRYPTION(const std::string& path, unsigned char* key
 		unsigned char* ADD; 
 
 		if(AD){
-			std::ifstream temp (AD_path);
+			std::ifstream temp (AD_path, std::ios::binary);
 			std::string content((std::istreambuf_iterator<char>(temp)),std::istreambuf_iterator<char>());
 
 			temp.close();
@@ -895,6 +895,15 @@ void fileHandler::HW_AES_GCM(const std::string& path, unsigned char* key, const 
 
 		outputFileTag.close();
 
+		/*
+		std::cout<<"***** Calculated TAG *****"<<std::endl;
+		for(int i = 0; i < 16; i++){
+			std::cout<<std::hex<<(int)TAG[i]<<" ";
+		}
+		std::cout<<"***** ******************* *****"<<std::endl;
+		*/
+
+
 		// Write AD to a text file
 		if(AD != "n"){
 			std::filesystem::path t(outputPath);
@@ -988,7 +997,7 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 		unsigned char* ADD; 
 
 		if(AD){
-			std::ifstream temp (AD_path);
+			std::ifstream temp (AD_path, std::ios::binary);
 			std::string content((std::istreambuf_iterator<char>(temp)),std::istreambuf_iterator<char>());
 
 			temp.close();
@@ -1007,9 +1016,40 @@ void fileHandler::HW_AES_GCM_DECRYPTION(const std::string& path, unsigned char* 
 		// Compare tags
 		if(memcmp(TAG, CLAIMED_TAG, 16) != 0){
 			std::cout<<"---- TAG AUTHENTICATION FAILED."<<std::endl;
+
+			/*
+			std::cout<<"***** Calculated TAG *****"<<std::endl;
+			std::cout<<"**Tag File: "<<TAG_path<<std::endl;
+			for(int i = 0; i < 16; i++){
+				std::cout<<std::hex<<(int)TAG[i]<<" ";
+			}
+			std::cout<<"***** ******************* *****"<<std::endl;
+
+			std::cout<<"***** Claimed TAG *****"<<std::endl;
+			for(int i = 0; i < 16; i++){
+				std::cout<<std::hex<<(int)CLAIMED_TAG[i]<<" ";
+			}
+			std::cout<<"***** ******************* *****"<<std::endl;
+
+			*/
 		}
 		else{
 			std::cout<<"---- TAG AUTHENTICATED."<<std::endl;
+
+			/*
+			std::cout<<"***** Calculated TAG *****"<<std::endl;
+			std::cout<<"**Tag File: "<<TAG_path<<std::endl;
+			for(int i = 0; i < 16; i++){
+				std::cout<<std::hex<<(int)TAG[i]<<" ";
+			}
+			std::cout<<"***** ******************* *****"<<std::endl;
+
+			std::cout<<"***** Claimed TAG *****"<<std::endl;
+			for(int i = 0; i < 16; i++){
+				std::cout<<std::hex<<(int)CLAIMED_TAG[i]<<" ";
+			}
+			std::cout<<"***** ******************* *****"<<std::endl;
+			*/
 
 			std::filesystem::remove(TAG_path);
 			std::filesystem::remove(AD_path);
