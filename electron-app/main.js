@@ -27,38 +27,30 @@ app.on('ready', ()=>{
     } 
     else{
       if(platform == 'win32'){
-        executablePath = path.join(__dirname, 'bin', 'win', 'enc.exe');
+        executablePath = path.join(__dirname, 'resources', 'bin', 'win', 'enc.exe');
       }
-      else if(platform == 'darwin' || platform == 'linux'){
-        executablePath = path.join(__dirname, 'bin', 'linux', 'enc');
+      else if(platform == 'darwin'){
+        executablePath = path.join(__dirname, 'resources', 'bin', 'mac', 'enc');
+      }
+      else if(platform == 'linux'){
+        executablePath = path.join(__dirname, 'resources', 'bin', 'linux', 'enc');
+      }
+      else{
+        alert("Unknown OS");
+        exit(2);
       }
     }
 
     //console.log("Executeable path: " +executablePath);
 
-    if(platform == 'win32'){
-      mainWindow = new BrowserWindow({
-
-        height: 800,
-        width: 1100,
-        webPreferences:{
-            nodeIntegration: true,
-            contextIsolation: false,
-            devTools: false,
-        },
-      });
-    }
-    else{
-      mainWindow = new BrowserWindow({
-
-        height: 800,
-        width: 1200,
-        webPreferences:{
-            nodeIntegration: true,
-            contextIsolation: false,
-        },
-      });
-    }
+    mainWindow = new BrowserWindow({
+      fullscreen: true,
+      webPreferences:{
+          nodeIntegration: true,
+          contextIsolation: false,
+          devTools: false,
+      },
+    });
     
 
     mainWindow.loadFile('index.html');
