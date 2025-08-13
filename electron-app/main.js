@@ -44,7 +44,7 @@ app.on('ready', ()=>{
     //console.log("Executeable path: " +executablePath);
 
     mainWindow = new BrowserWindow({
-      fullscreen: true,
+
       webPreferences:{
           nodeIntegration: true,
           contextIsolation: false,
@@ -52,7 +52,7 @@ app.on('ready', ()=>{
       },
     });
     
-
+    mainWindow.maximize();
     mainWindow.loadFile('index.html');
     
 });

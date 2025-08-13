@@ -4,6 +4,34 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 6px;        
+  height: 6px;              
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;  
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.4); 
+  border-radius: 3px;                
+  transition: background-color 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0,0,0,0.6);
+}
+
+* {
+  scrollbar-width: thin; 
+  scrollbar-color: rgba(0,0,0,0.4) transparent;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  scrollbar-color: rgba(0,0,0,0.6) transparent;
+}
+
 .container{
     width: 100vw;
     height: 100vh;
@@ -22,7 +50,7 @@
 }
 
 .input{
-    width: 31%;
+    width: 40%;
     height: 80%;
     margin-left: 2%;
 
@@ -30,15 +58,13 @@
     overflow-x: hidden;
 
 
-    background: #F8F9FA; 
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     padding: 20px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 .preview{
-    width: 61%;
+    width: 50%;
     height: 96%;
 }
 
@@ -251,9 +277,7 @@ PREVIEW SECTION
     align-items: center;
     flex-direction: column;
 
-    background: #F8F9FA;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-top: 16px;
 }
