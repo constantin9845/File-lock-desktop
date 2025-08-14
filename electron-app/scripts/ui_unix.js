@@ -234,7 +234,7 @@ deny.addEventListener('click', ()=>{
     summ_list.innerHTML = '';
     auth.innerHTML = '';
     AD.innerHTML = '';
-    summaryContainer.style.transform = 'translate(-50%, 100%)';
+    summaryContainer.style.transform = 'translate(-50%, 200%)';
 })
 
 // clear preview sections
