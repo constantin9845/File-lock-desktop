@@ -19,10 +19,8 @@
   <a href="#you-may-also-like">Extra</a>
 </p>
 
- <video width="320" height="240" autoplay>
-  <source src="filelock-demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video> 
+![Demo animation](filelock-demo.gif)
+
 
 ## Key Features
 
