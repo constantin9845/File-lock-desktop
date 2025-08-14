@@ -57,7 +57,7 @@ $ npm run build
 
 ## Download
 
-You can [download](https://github.com/constantin9845/File-lock-desktop/releases/tag/v2.0.0) the latest installable version of Filelock for Windows, macOS and Linux.
+You can [download](https://github.com/constantin9845/File-lock-desktop/releases/tag/v1.0.0) the latest installable version of Filelock for Windows, macOS and Linux.
 
 ## Important
 
