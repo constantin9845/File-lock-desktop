@@ -1,7 +1,7 @@
 
 <h1 align="center">
   <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/constantin9845/File-lock-desktop/blob/UI/electron-app/build/padlock_78356.png?raw=true" alt="Filelock logo" width="200"></a>
+  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/constantin9845/File-lock-desktop/blob/UI/electron-app/build/6801_1024x1024x32.png?raw=true" alt="Filelock logo" width="200"></a>
   <br>
   Filelock
   <br>
