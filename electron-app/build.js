@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const platform = process.platform;
-const outputDir = path.join(__dirname, 'bin', platform);
+const outputDir = path.join(__dirname, 'resources', 'bin', (platform === 'win32') ? 'win' : (platform === 'darwin') ? 'mac' : 'linux');
 
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
