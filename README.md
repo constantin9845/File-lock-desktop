@@ -16,7 +16,9 @@
   <a href="#important">Important</a> •
   <a href="#usage">Usage</a> •
   <a href="#feedback">Feedback</a> •
-  <a href="#you-may-also-like">Extra</a>
+  <a href="#you-may-also-like">Extra</a> •
+  <a href="https://github.com/constantin9845/File-lock-desktop/blob/main/MANUAL.md">Manual</a> •
+  <a href="https://github.com/constantin9845/File-lock-desktop/blob/main/SECURITY.md">Security</a>
 </p>
 
 ![Demo animation](filelock-demo.gif)
